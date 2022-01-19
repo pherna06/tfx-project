@@ -1,0 +1,23 @@
+{
+	"out" : {
+		"dir"  : "/tmp/pherna06/repos/tfx-project/plots",
+		"name" : "batch_size_1000_10000.png"
+	},
+	"in" : {
+		"dir"   : "/tmp/pherna06/repos/tfx-project/time",
+		"files" : [
+			"batch_1000.csv" ,
+			"batch_2000.csv" ,
+			"batch_3000.csv" ,
+			"batch_4000.csv" ,
+			"batch_5000.csv" ,
+			"batch_6000.csv" ,
+			"batch_7000.csv" ,
+			"batch_8000.csv" ,
+			"batch_9000.csv" ,
+			"batch_10000.csv"
+		],
+		"xticks" : [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],
+		"yticks" : [0,200,400,600,800,1000,1200,1400]
+	}
+}
