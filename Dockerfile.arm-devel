@@ -20,6 +20,14 @@ LABEL maintainer=gvasudevan@google.com
 LABEL tensorflow_serving_github_branchtag=${TF_SERVING_VERSION_GIT_BRANCH}
 LABEL tensorflow_serving_github_commit=${TF_SERVING_VERSION_GIT_COMMIT}
 
+RUN wget -qO \
+	- https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public \
+	| sudo apt-key add -
+RUN add-apt-repository --yes \
+	https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+
+RUN apt-get update && apt-get install adoptopenjdk-8-hotspot
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
         automake \
         build-essential \
@@ -32,7 +40,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libtool \
         libzmq3-dev \
         mlocate \
-        openjdk-8-jdk\
         openjdk-8-jre-headless \
         pkg-config \
         python-dev \
