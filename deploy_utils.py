@@ -29,6 +29,8 @@ def deploy_prometheus(
 		
 		cont_detached = True ,
 		cont_name     = None ):
+	PROMETHEUS_PORT = 9090
+
 	if prom_config == 'generate':
 		metrics_dict = {}
 		if config_job_name is not None:
@@ -50,7 +52,7 @@ def deploy_prometheus(
 		prom_cmd.append('docker')
 		prom_cmd.append('run')
 		prom_cmd.append('-p')
-		prom_cmd.append(f'{prom_port}:{prom_port}')
+		prom_cmd.append(f'{prom_port}:{PROMETHEUS_PORT}')
 		prom_cmd.append('-v')
 		prom_cmd.append(f'{host_prom_path}:{cont_prom_path}')
 		
@@ -93,11 +95,14 @@ def deploy_serving(
  
 		cont_detached = True        ,
 		cont_name     = None ):
+	TFSERVING_MODEL_PORT = 8501
+	TFSERVING_TENSORBOARD_PORT = 8500
+
 	model_cmd = []
 	model_cmd.append('docker')
 	model_cmd.append('run')
 	model_cmd.append('-p')
-	model_cmd.append(f'{model_port}:{model_port}')
+	model_cmd.append(f'{model_port}:{TFSERVING_MODEL_PORT}')
 	model_cmd.append('-v')
 	model_cmd.append(f'{host_model_dir}:{cont_model_dir}')
 	model_cmd.append('-e')
@@ -105,7 +110,7 @@ def deploy_serving(
 
 	if tensorboard:
 		model_cmd.append('-p')
-		model_cmd.append(f'{tb_port}:{tb_port}')
+		model_cmd.append(f'{tb_port}:{TFSERVING_TENSORBOARD_PORT}')
 		model_cmd.append('-v')
 		model_cmd.append(f'{host_tb_dir}:{cont_tb_dir}')
 
