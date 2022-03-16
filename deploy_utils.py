@@ -7,7 +7,6 @@ def generate_prom_yaml(config_path, config_scrape):
 	if config_scrape:
 		config_dict['scrape_configs'] = config_scrape
 
-	config_path = os.path.join(dir_path, config_name)
 	os.makedirs(os.path.dirname(config_path), exist_ok=True)
 	with open(config_path, 'w') as config_file:
 		yaml.dump(config_dict, config_file)
