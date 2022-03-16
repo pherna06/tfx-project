@@ -3,7 +3,7 @@ from deploy_utils import deploy_serving, deploy_prometheus
 
 def main():
     with open('./deployment.yml', 'r') as deplo_yaml:
-        deployment = yaml.load(deplo_yaml)
+        deployment = yaml.load(deplo_yaml, Loader=yaml.FullLoader)
 
     for deploy in deployment:
         model = deploy['model']
