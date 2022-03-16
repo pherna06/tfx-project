@@ -41,7 +41,7 @@ def deploy_prometheus(
 		if config_metrics_path is not None:
 			scrape_dict['metrics_path'] = config_metrics_path
 		
-		host_prom_path = generate_prom_yaml(config_path, scrape_dict)
+		host_prom_path = generate_prom_yaml(config_path, [scrape_dict])
 	
 	if prom_config == 'load':
 		pass
