@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
         git \
+	gnupg2 \
         libcurl3-dev \
         libfreetype6-dev \
         libpng-dev \
