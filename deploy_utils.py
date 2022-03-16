@@ -33,15 +33,13 @@ def deploy_prometheus(
 	PROMETHEUS_PORT = 9090
 
 	if prom_config == 'generate':
-		metrics_dict = {}
+		scrape_dict = {}
 		if config_job_name is not None:
-			metrics_dict['job_name'] = config_job_name
+			scrape_dict['job_name'] = config_job_name
 		if config_target is not None:
-			metrics_dict['static_configs'] = [{'targets' : [config_target]}]
+			scrape_dict['static_configs'] = [{'targets' : [config_target]}]
 		if config_metrics_path is not None:
-			metrics_dict['metrics_path'] = config_metrics_path
-
-		scrape_dict = {'scrape_configs' : [metrics_dict]}
+			scrape_dict['metrics_path'] = config_metrics_path
 		
 		host_prom_path = generate_prom_yaml(config_path, scrape_dict)
 	
