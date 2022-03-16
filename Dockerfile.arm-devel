@@ -49,6 +49,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # Install openjdk-8
+RUN apt-get install -y 
 RUN wget -qO \
 	- https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public \
 	| apt-key add -
@@ -56,9 +57,8 @@ RUN wget -qO \
 RUN add-apt-repository --yes \
 	https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 
-RUN apt-get update && apt-get install \
+RUN apt-get update && apt-get install -y \
 	adoptopenjdk-8-hotspot \
-	openjdk-8-jre-headless
 
 # Install python 3.7.
 RUN add-apt-repository ppa:deadsnakes/ppa && \
