@@ -1,12 +1,13 @@
 import subprocess
 
-def generate_prom_yaml(config_path, config_scrape):
+def generate_prom_yaml(config_dir, config_scrape, config_yaml='prometheus.yml'):
 	import os
 	import yaml
 	config_dict = {}
 	if config_scrape:
 		config_dict['scrape_configs'] = config_scrape
 
+	config_path = os.path.join(config_dir, config_yaml)
 	os.makedirs(os.path.dirname(config_path), exist_ok=True)
 	with open(config_path, 'w') as config_file:
 		yaml.dump(config_dict, config_file)

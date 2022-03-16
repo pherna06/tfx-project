@@ -16,7 +16,7 @@
   prometheus:
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_4.0'
-    config_path         : '/tmp/prometheus_4_0.yml'
+    config_path         : '/tmp/prometheus_4_0'
     config_target       : 'esfinge.dacya.ucm.es:19091'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
@@ -44,7 +44,7 @@
   prometheus:
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_4.1'
-    config_path         : '/tmp/prometheus_4_1.yml'
+    config_path         : '/tmp/prometheus_4_1'
     config_target       : 'esfinge.dacya.ucm.es:19092'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
@@ -72,7 +72,7 @@
   prometheus:
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_2.0'
-    config_path         : '/tmp/prometheus_2_0.yml'
+    config_path         : '/tmp/prometheus_2_0'
     config_target       : 'esfinge.dacya.ucm.es:19093'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
@@ -100,7 +100,7 @@
   prometheus:
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_2.1'
-    config_path         : '/tmp/prometheus_2_1.yml'
+    config_path         : '/tmp/prometheus_2_1'
     config_target       : 'esfinge.dacya.ucm.es:19094'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
@@ -128,7 +128,7 @@
   prometheus:
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_1.0'
-    config_path         : '/tmp/prometheus_1_0.yml'
+    config_path         : '/tmp/prometheus_1_0'
     config_target       : 'esfinge.dacya.ucm.es:19095'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
@@ -156,7 +156,7 @@
   prometheus:
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_1.1'
-    config_path         : '/tmp/prometheus_1_1.yml'
+    config_path         : '/tmp/prometheus_1_1'
     config_target       : 'esfinge.dacya.ucm.es:19096'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
