@@ -4,7 +4,7 @@
     cont_model_dir : '/models/fashion_mnist'
     model_port     : 18501
 
-    cont_cpus : '4-7'
+    cont_cpus : '12-15'
     
     parallelism   : 'intra_inter_threads'
     omp_threads   : 4
@@ -22,7 +22,7 @@
 
     prom_image : 'prom/prometheus'
     prom_port  : 19091
-    prom_cpus  : '0-3'
+    prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_4.0-prom'
 
@@ -32,7 +32,35 @@
     cont_model_dir : '/models/fashion_mnist'
     model_port     : 18502
 
-    cont_cpus : '8-9'
+    cont_cpus : '8-11'
+    
+    parallelism   : 'intra_inter_threads'
+    omp_threads   : 4
+    intra_threads : 4
+    inter_threads : 1
+
+    tfserving_image : 'tensorflow/serving:latest-mkl'
+    cont_name : 'fashion_mnist_4.1'
+  prometheus:
+    prom_config         : 'generate'
+    config_job_name     : 'fashion_mnist_4.1'
+    config_path         : '/tmp/prometheus_4_1.yml'
+    config_target       : 'esfinge.dacya.ucm.es:19092'
+    config_metrics_path : '/monitoring/prometheus/metrics'
+
+    prom_image : 'prom/prometheus'
+    prom_port  : 19092
+    prom_cpus  : '0-1'
+
+    cont_name : 'fashion_mnist_4.1-prom'
+
+- model:
+    model_name     : 'fashion_mnist'
+    host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
+    cont_model_dir : '/models/fashion_mnist'
+    model_port     : 18503
+
+    cont_cpus : '6-7'
     
     parallelism   : 'intra_inter_threads'
     omp_threads   : 2
@@ -45,12 +73,12 @@
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_2.0'
     config_path         : '/tmp/prometheus_2_0.yml'
-    config_target       : 'esfinge.dacya.ucm.es:19092'
+    config_target       : 'esfinge.dacya.ucm.es:19093'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
     prom_image : 'prom/prometheus'
-    prom_port  : 19092
-    prom_cpus  : '0-3'
+    prom_port  : 19093
+    prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_2.0-prom'
 
@@ -58,9 +86,9 @@
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
-    model_port     : 18503
+    model_port     : 18504
 
-    cont_cpus : '10-11'
+    cont_cpus : '4-5'
     
     parallelism   : 'intra_inter_threads'
     omp_threads   : 2
@@ -73,12 +101,12 @@
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_2.1'
     config_path         : '/tmp/prometheus_2_1.yml'
-    config_target       : 'esfinge.dacya.ucm.es:19093'
+    config_target       : 'esfinge.dacya.ucm.es:19094'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
     prom_image : 'prom/prometheus'
-    prom_port  : 19093
-    prom_cpus  : '0-3'
+    prom_port  : 19094
+    prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_2.1-prom'
 
@@ -86,9 +114,9 @@
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
-    model_port     : 18504
+    model_port     : 18505
 
-    cont_cpus : '12'
+    cont_cpus : '3'
     
     parallelism   : 'intra_inter_threads'
     omp_threads   : 1
@@ -101,12 +129,12 @@
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_1.0'
     config_path         : '/tmp/prometheus_1_0.yml'
-    config_target       : 'esfinge.dacya.ucm.es:19094'
+    config_target       : 'esfinge.dacya.ucm.es:19095'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
     prom_image : 'prom/prometheus'
-    prom_port  : 19094
-    prom_cpus  : '0-3'
+    prom_port  : 19095
+    prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_1.0-prom'
 
@@ -114,9 +142,9 @@
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
-    model_port     : 18505
+    model_port     : 18506
 
-    cont_cpus : '13'
+    cont_cpus : '2'
     
     parallelism   : 'intra_inter_threads'
     omp_threads   : 1
@@ -129,67 +157,11 @@
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_1.1'
     config_path         : '/tmp/prometheus_1_1.yml'
-    config_target       : 'esfinge.dacya.ucm.es:19095'
-    config_metrics_path : '/monitoring/prometheus/metrics'
-
-    prom_image : 'prom/prometheus'
-    prom_port  : 19095
-    prom_cpus  : '0-3'
-
-    cont_name : 'fashion_mnist_1.1-prom'
-
-- model:
-    model_name     : 'fashion_mnist'
-    host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
-    cont_model_dir : '/models/fashion_mnist'
-    model_port     : 18506
-
-    cont_cpus : '14'
-    
-    parallelism   : 'intra_inter_threads'
-    omp_threads   : 1
-    intra_threads : 1
-    inter_threads : 1
-
-    tfserving_image : 'tensorflow/serving:latest-mkl'
-    cont_name : 'fashion_mnist_1.2'
-  prometheus:
-    prom_config         : 'generate'
-    config_job_name     : 'fashion_mnist_1.2'
-    config_path         : '/tmp/prometheus_1_2.yml'
     config_target       : 'esfinge.dacya.ucm.es:19096'
     config_metrics_path : '/monitoring/prometheus/metrics'
 
     prom_image : 'prom/prometheus'
     prom_port  : 19096
-    prom_cpus  : '0-3'
+    prom_cpus  : '0-1'
 
-    cont_name : 'fashion_mnist_1.2-prom'
-
-- model:
-    model_name     : 'fashion_mnist'
-    host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
-    cont_model_dir : '/models/fashion_mnist'
-    model_port     : 18507
-
-    cont_cpus : '15'
-    
-    parallelism   : 'intra_inter_threads'
-    omp_threads   : 1
-    intra_threads : 1
-    inter_threads : 1
-    
-    tfserving_image : 'tensorflow/serving:latest-mkl'
-    cont_name : 'fashion_mnist_1.3'
-  prometheus:
-    prom_config         : 'generate'
-    config_job_name     : 'fashion_mnist_1.3'
-    config_path         : '/tmp/prometheus_1_3.yml'
-    config_target       : 'esfinge.dacya.ucm.es:19097'
-    config_metrics_path : '/monitoring/prometheus/metrics'
-
-    prom_image : 'prom/prometheus'
-    prom_port  : 19097
-    prom_cpus  : '0-3'
-
-    cont_name : 'fashion_mnist_1.3-prom'
+    cont_name : 'fashion_mnist_1.1-prom'
