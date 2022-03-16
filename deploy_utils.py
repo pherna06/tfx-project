@@ -122,7 +122,7 @@ def deploy_serving(
 			model_cmd.append('-e')
 			model_cmd.append('MKLDNN_VERBOSE=1')
 
-		if paralellism == 'session_threads':
+		if parallelism == 'session_threads':
 			model_cmd.append('-e')
 			model_cmd.append(f'TENSORFLOW_SESSION_PARALELLISM={session_threads}')
 		elif parallelism == 'intra_inter_threads':
