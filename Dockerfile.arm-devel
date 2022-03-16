@@ -20,8 +20,9 @@ LABEL maintainer=gvasudevan@google.com
 LABEL tensorflow_serving_github_branchtag=${TF_SERVING_VERSION_GIT_BRANCH}
 LABEL tensorflow_serving_github_commit=${TF_SERVING_VERSION_GIT_COMMIT}
 
+RUN apt-get update && apt-get install apt-utils
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        apt-utils \
 	automake \
         build-essential \
         ca-certificates \
@@ -49,7 +50,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install openjdk-8
 RUN wget -qO \
 	- https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public \
-	| sudo apt-key add -
+	| apt-key add -
 
 RUN add-apt-repository --yes \
 	https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
