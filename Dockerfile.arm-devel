@@ -88,16 +88,12 @@ RUN pip3 --no-cache-dir install \
     --ignore-installed six>=1.12.0
 
 # Set up Bazel
-ENV BAZEL_VERSION 5.0.0
-WORKDIR /
-RUN mkdir /bazel && \
-    cd /bazel && \
-    curl -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36" -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
-    curl -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36" -fSsL -o /bazel/LICENSE.txt https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE && \
-    chmod +x bazel-*.sh && \
-    ./bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
-    cd / && \
-    rm -f /bazel/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh
+ENV INSTALL_BAZEL_VERSION=4.2.0
+RUN curl -L https://github.com/bazelbuild/bazel/releases/download/${INSTALL_BAZEL_VERSION}/bazel-${INSTALL_BAZEL_VERSION}-installer-linux-x86_64.sh \
+        -o bazel-${INSTALL_BAZEL_VERSION}-installer-linux-x86_64.sh && \
+    chmod +x bazel-${INSTALL_BAZEL_VERSION}-installer-linux-x86_64.sh && \
+    ./bazel-${INSTALL_BAZEL_VERSION}-installer-linux-x86_64.sh && \
+    rm -f bazel-${INSTALL_BAZEL_VERSION}-installer-linux-x86_64.sh
 
 # Download TF Serving sources (optionally at specific commit).
 WORKDIR /tensorflow-serving
