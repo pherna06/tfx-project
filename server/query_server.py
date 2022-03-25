@@ -12,7 +12,7 @@ def import_servings_from_deployment_config(config_path):
         servings[i] = {}
         servings[i]['id'] = i
         servings[i]['cont_name'] = deploy['model']['cont_name']
-        servings[i]['query_uri'] = deploy['model']['query_uri']
+        servings[i]['serving_uri'] = deploy['utils']['serving_uri']
 
     return servings
 

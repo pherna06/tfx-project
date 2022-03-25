@@ -1,6 +1,4 @@
 - model:
-    query_uri : 'http://esfinge.dacya.ucm.es:18501/v1/models/fashion_mnist:predict' 
-
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
@@ -17,8 +15,6 @@
     cont_name : 'fashion_mnist_4.0'
   
   prometheus:
-    query_uri : 'http://esfinge.dacya.ucm.es:19091/api/v1/query'
-
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_4.0'
     config_path         : '/tmp/prometheus_4_0'
@@ -30,10 +26,12 @@
     prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_4.0-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18501/v1/models/fashion_mnist:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19091/api/v1/query'
 
 - model:
-    query_uri : 'http://esfinge.dacya.ucm.es:18502/v1/models/fashion_mnist:predict' 
-
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
@@ -50,8 +48,6 @@
     cont_name : 'fashion_mnist_4.1'
 
   prometheus:
-    query_uri : 'http://esfinge.dacya.ucm.es:19092/api/v1/query'
-
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_4.1'
     config_path         : '/tmp/prometheus_4_1'
@@ -63,10 +59,12 @@
     prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_4.1-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18502/v1/models/fashion_mnist:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19092/api/v1/query'
 
 - model:
-    query_uri : 'http://esfinge.dacya.ucm.es:18503/v1/models/fashion_mnist:predict' 
-
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
@@ -83,8 +81,6 @@
     cont_name : 'fashion_mnist_2.0'
 
   prometheus:
-    query_uri : 'http://esfinge.dacya.ucm.es:19093/api/v1/query'
-
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_2.0'
     config_path         : '/tmp/prometheus_2_0'
@@ -96,10 +92,12 @@
     prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_2.0-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18503/v1/models/fashion_mnist:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19093/api/v1/query'
 
 - model:
-    query_uri : 'http://esfinge.dacya.ucm.es:18504/v1/models/fashion_mnist:predict' 
-
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
@@ -116,8 +114,6 @@
     cont_name : 'fashion_mnist_2.1'
 
   prometheus:
-    query_uri : 'http://esfinge.dacya.ucm.es:19094/api/v1/query'
-
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_2.1'
     config_path         : '/tmp/prometheus_2_1'
@@ -129,10 +125,12 @@
     prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_2.1-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18504/v1/models/fashion_mnist:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19094/api/v1/query'
 
 - model:
-    query_uri : 'http://esfinge.dacya.ucm.es:18505/v1/models/fashion_mnist:predict' 
-
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
@@ -149,8 +147,6 @@
     cont_name : 'fashion_mnist_1.0'
 
   prometheus:
-    query_uri : 'http://esfinge.dacya.ucm.es:19095/api/v1/query'
-
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_1.0'
     config_path         : '/tmp/prometheus_1_0'
@@ -162,10 +158,12 @@
     prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_1.0-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18505/v1/models/fashion_mnist:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19095/api/v1/query'
 
 - model:
-    query_uri : 'http://esfinge.dacya.ucm.es:18506/v1/models/fashion_mnist:predict' 
-
     model_name     : 'fashion_mnist'
     host_model_dir : '/homelocal/pherna06/models/fashion_mnist'
     cont_model_dir : '/models/fashion_mnist'
@@ -182,8 +180,6 @@
     cont_name : 'fashion_mnist_1.1'
 
   prometheus:
-    query_uri : 'http://esfinge.dacya.ucm.es:19096/api/v1/query'
-
     prom_config         : 'generate'
     config_job_name     : 'fashion_mnist_1.1'
     config_path         : '/tmp/prometheus_1_1'
@@ -195,3 +191,7 @@
     prom_cpus  : '0-1'
 
     cont_name : 'fashion_mnist_1.1-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18506/v1/models/fashion_mnist:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19096/api/v1/query'
