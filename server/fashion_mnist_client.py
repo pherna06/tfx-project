@@ -12,7 +12,7 @@ _menu_actions = [
     get_servings
 ]
 
-_menu_promt = 'Client to perform "fashion_mnist"-like queries\n' \
+_menu_prompt = 'Client to perform "fashion_mnist"-like queries\n' \
               '----------------------------------------------\n' \
               'OPTIONS MENU:\n'                                  \
               '    1. Explore available servings.\n'             \
