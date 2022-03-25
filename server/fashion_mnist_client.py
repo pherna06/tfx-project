@@ -27,10 +27,17 @@ def query_serving():
             serving_uri,
             json = request_json )
         elapsed_time = (time.time() - start) * 1000
+    
+    except Exception as err:
+        print('An error occurred:')
+        print(err)
+        print('Could not perform action.')
+        return
 
-    print(f'Query elapsed time: {elapsed_time:.3f} ms')
-    if (print_response):
-        print(json.dumps(response.json(), indent=4))        
+    else:
+        print(f'Query elapsed time: {elapsed_time:.3f} ms')
+        if (print_response):
+            print(json.dumps(response.json(), indent=4))
 
 _menu_actions = [
     lambda : 0    ,
