@@ -22,12 +22,10 @@ _menu_prompt = 'Client to perform "fashion_mnist"-like queries\n' \
               '> Input option :  '
 
 def client_menu():
-    opt = 0
-    while opt in range(len(_menu_actions)):
-        opt = input(_menu_prompt)
-        if opt == 0:
-            break
+    opt = int(input(_menu_prompt))
+    while opt != 0 and opt in range(len(_menu_actions)):
         _menu_actions[opt]()
+        opt = int(input(_menu_prompt))
 
 def main():
     client_menu()
