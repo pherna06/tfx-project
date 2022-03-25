@@ -11,7 +11,7 @@ def import_servings_from_deployment_config(config_path):
     for i, deploy in enumerate(deployment):
         servings[i] = {}
         servings[i]['id'] = i
-        servings[i]['cont_name'] = deplot['model']['cont_name']
+        servings[i]['cont_name'] = deploy['model']['cont_name']
         servings[i]['query_uri'] = deploy['model']['query_uri']
 
     return servings
