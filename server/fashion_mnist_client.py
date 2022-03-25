@@ -1,11 +1,12 @@
 import requests
+import json
 
 _server_url = 'http://esfinge.dacya.ucm.es:5000'
 
 def get_servings():
     servings_uri = _server_url + '/servings'
     response = requests.get(servings_uri)
-    print(response.json())
+    print(json.dumps(response.json()))
 
 _menu_actions = [
     lambda : 0,
