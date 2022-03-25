@@ -15,7 +15,7 @@ def import_servings_from_deployment_config(config_path):
 
     return servings
 
-_servings = import_servings_from_deployment_config('../deploy/deployment.yaml')
+_servings = import_servings_from_deployment_config('../deploy/deployment.yml')
 
 @app.get('/servings')
 def get_servings():
