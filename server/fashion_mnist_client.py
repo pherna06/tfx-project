@@ -11,16 +11,15 @@ def get_servings():
     print(json.dumps(response.json(), indent=4))
 
 def query_serving():
-    size = int(input('> Input test query size: '))
-    serving_uri = input('> Input serving query URI: ')
-    print_response = input('> Print response? (y/n): ') == 'y'
-
     try:
+        size = int(input('> Input test query size: '))
+        serving_uri = input('> Input serving query URI: ')
+        print_response = input('> Print response? (y/n): ') == 'y'
+
         instances = np.random.rand(size, 28, 28, 1).tolist()
         request_json = {
             'signature_name' : 'serving_default' ,
-            'instances'      : np.random.rand(size, 28, 28, 1)
-        }
+            'instances'      : instances         }
 
         start = time.time()
         response = requests.post(
