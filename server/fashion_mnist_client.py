@@ -8,7 +8,7 @@ def get_servings():
     print(response.json())
 
 _menu_actions = [
-    lambda : pass,
+    lambda : 0,
     get_servings
 ]
 
