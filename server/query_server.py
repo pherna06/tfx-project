@@ -20,5 +20,5 @@ _servings = import_servings_from_deployment_config('../deploy/deployment.yml')
 
 @app.get('/servings')
 def get_servings():
-    return jsonify( import_servings_from_deployment_config() )
+    return jsonify(_servings)
 
