@@ -4,7 +4,7 @@ _server_url = 'https://esfinge.dacya.ucm.es:5000'
 
 def get_servings():
     servings_uri = _server_url + '/servings'
-    response = requests.get(servings_url)
+    response = requests.get(servings_uri)
     print(response.json())
 
 _menu_actions = [
