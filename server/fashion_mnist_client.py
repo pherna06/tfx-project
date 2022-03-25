@@ -1,6 +1,6 @@
 import requests
 
-_server_url = 'https://esfinge.dacya.ucm.es:5000'
+_server_url = 'http://esfinge.dacya.ucm.es:5000'
 
 def get_servings():
     servings_uri = _server_url + '/servings'
