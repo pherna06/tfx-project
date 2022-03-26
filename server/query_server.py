@@ -44,7 +44,7 @@ def update_servings():
     if 'finished_queries' in args:
         _servings[i]['finished_queries'] += args['finished_queries']
 
-@app.get('/decision'):
+@app.get('/decision')
 def decide_serving():
     args = request.args
     if 'size' not in args:
