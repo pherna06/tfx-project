@@ -135,6 +135,7 @@ def test_query_loop():
         size = int(input('> Input test queries size: '))
         rep = int(input('> Input number of queries: '))
 
+        servings_uri = _server_url + '/servings'
         decision_uri = _server_url + '/decision'
         decision_params = {'size' : str(size)}
         notify_params = {'finished_queries': 1}
