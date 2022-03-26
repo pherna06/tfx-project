@@ -82,6 +82,7 @@ def query_serving_by_id():
         print(json.dumps(response.json(), indent=4))
 
         # Send test query to serving.
+        serving_uri = response.json()['serving_uri']
         instances = np.random.rand(size, 28, 28, 1).tolist()
         response, elapsed_time = query_serving(serving_uri, instances)
 
