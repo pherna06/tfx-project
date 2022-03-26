@@ -45,7 +45,7 @@ def query_serving_by_id():
         print_response = input('> Print serving response? (y/n): ') == 'y'
 
         servings_uri = _server_url + '/servings'
-        request_params = { 'id' : str(size) }
+        request_params = { 'id' : str(id_num) }
         response = requests.get(
             servings_uri            ,
             params = request_params )
