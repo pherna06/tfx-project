@@ -41,7 +41,7 @@ def query_serving_by_uri():
 def query_serving_by_id():
     try:
         size = int(input('> Input test query size: '))
-        id_num = input('> Input serving numeric ID: ')
+        id_num = int(input('> Input serving numeric ID: '))
         print_response = input('> Print serving response? (y/n): ') == 'y'
 
         servings_uri = _server_url + '/servings'
