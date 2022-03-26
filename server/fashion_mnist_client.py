@@ -141,12 +141,13 @@ def test_query_loop():
         for i in range(rep):
             # Request for serving decision.
             response = query_server_decision(decision_uri, decision_params)
+            serving_uri = response.json()['serving_uri']
+            id_num = response.json()['id']
 
             print(f'> Query {i + 1}: Selected serving:')
             print(json.dumps(response.json(), indent=4))
 
             # Send test query to serving.
-            serving_uri = response.json()['serving_uri']
             instances = np.random.rand(size, 28, 28, 1).tolist()
             response, elapsed_time = query_serving(serving_uri, instances)
 
