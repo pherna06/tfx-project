@@ -161,12 +161,13 @@ def test_query_loop():
 
 
 
-_menu_actions = [
-    lambda : ''          ,
-    get_servings         ,
-    query_serving_by_uri ,
-    query_serving_by_id  ,
-    test_query_loop      ]
+_menu_actions = {
+    '0' : lambda : ''                      ,
+    '1' : get_servings                     ,
+    '2' : query_serving_by_uri             ,
+    '3' : query_serving_by_id              ,
+    '4' : query_serving_by_server_decision ,
+    '5' : test_query_loop                  }
 
 _menu_prompt = '**********************************************\n' \
                'Client to perform "fashion_mnist"-like queries\n' \
@@ -175,17 +176,18 @@ _menu_prompt = '**********************************************\n' \
                '    1. Explore available servings.\n'             \
                '    2. Make test query to a serving (by URI).\n'  \
                '    3. Make test query to a serving (by ID).\n'   \
-               '    4. Test query loop.\n'                        \
+               '    4. Make test query (server-decided)\n.'       \
+               '    5. Test query loop.\n'                        \
                '\n'                                               \
                '    0. QUIT\n'                                    \
                '\n'                                               \
                '> Input option :  '
 
 def client_menu():
-    opt = int(input(_menu_prompt))
-    while opt != 0 and opt in range(len(_menu_actions)):
+    opt = input(_menu_prompt)
+    while opt != '0' and opt in _menu_actions:
         _menu_actions[opt]()
-        opt = int(input(_menu_prompt))
+        opt = input(_menu_prompt)
 
 def main():
     client_menu()
