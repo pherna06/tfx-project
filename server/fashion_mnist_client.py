@@ -110,7 +110,7 @@ def query_serving_by_server_decision():
         # Request for serving decision.
         decision_uri = _server_url + '/decision'
         request_params = { 'size' : str(size) } # Possible QoS params.
-        response = query_server_decision(decision_url, request_params)
+        response = query_server_decision(decision_uri, request_params)
 
         print('> Selected serving:')
         print(json.dumps(response.json(), indent=4))
@@ -176,7 +176,7 @@ _menu_prompt = '**********************************************\n' \
                '    1. Explore available servings.\n'             \
                '    2. Make test query to a serving (by URI).\n'  \
                '    3. Make test query to a serving (by ID).\n'   \
-               '    4. Make test query (server-decided)\n.'       \
+               '    4. Make test query (server-decided).\n'       \
                '    5. Test query loop.\n'                        \
                '\n'                                               \
                '    0. QUIT\n'                                    \
