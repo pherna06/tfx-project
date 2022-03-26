@@ -46,6 +46,8 @@ def update_servings():
     if 'finished_queries' in args:
         _servings[id_num]['finished_queries'] += int(args['finished_queries'])
 
+    return ''
+
 @app.get('/decision')
 def decide_serving():
     args = request.args
