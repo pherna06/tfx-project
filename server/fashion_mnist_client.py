@@ -139,7 +139,8 @@ def test_query_loop():
         decision_params = {'size' : str(size)}
         notify_params = {'finished_queries': 1}
         for i in range(rep):
-            response = query_server_decision(decision_url, decision_params)
+            # Request for serving decision.
+            response = query_server_decision(decision_uri, decision_params)
 
             print(f'> Query {i + 1}: Selected serving:')
             print(json.dumps(response.json(), indent=4))
@@ -154,7 +155,7 @@ def test_query_loop():
 
             print(f'Query elapsed time: {elapsed_time:.3f} ms')
 
-    except:
+    except Exception as err:
         print('An error occurred:')
         print(err)
         print('Could not perform acition.')
