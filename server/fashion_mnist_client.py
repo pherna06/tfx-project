@@ -21,8 +21,8 @@ def query_serving(serving_uri, instances):
 
 def query_server_decision(decision_uri, params):
     response = requests.get(
-        decision_uri            ,
-        params = request_params )
+        decision_uri    ,
+        params = params )
     assert response.ok, response.text
 
     return response
