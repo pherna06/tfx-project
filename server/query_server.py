@@ -20,5 +20,12 @@ _servings = import_servings_from_deployment_config('../deploy/deployment.yml')
 
 @app.get('/servings')
 def get_servings():
-    return jsonify(_servings)
-
+    args = request.args
+    if 'id' in args:
+        id_num = args['id']
+        if id_num in _servings:
+            return jsonify(_servings[id_num])
+        else:
+            return f'Serving with ID {id_num} not found.', 400
+    else:
+        return jsonify(_servings)
