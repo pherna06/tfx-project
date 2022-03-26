@@ -22,7 +22,7 @@ _servings = import_servings_from_deployment_config('../deploy/deployment.yml')
 def get_servings():
     args = request.args
     if 'id' in args:
-        id_num = args['id']
+        id_num = int(args['id'])
         if id_num in _servings:
             return jsonify(_servings[id_num])
         else:
