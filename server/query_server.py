@@ -51,5 +51,5 @@ def decide_serving():
         return f'"size" param needed to decide', 400
     
     size = int(args['size'])
-    id_num = random.choice(_servings)
-    return jsonify(_servings[id_num])
+    serving = random.choice(_servings)
+    return jsonify(serving)
