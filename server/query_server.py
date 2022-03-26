@@ -41,10 +41,10 @@ def update_servings():
     args = request.args
     if 'id' not in args:
         return f'"id" param needed to update serving data', 400
-    id_num = args['id']
-    
+    id_num = int(args['id'])
+
     if 'finished_queries' in args:
-        _servings[id_num]['finished_queries'] += args['finished_queries']
+        _servings[id_num]['finished_queries'] += int(args['finished_queries'])
 
 @app.get('/decision')
 def decide_serving():
