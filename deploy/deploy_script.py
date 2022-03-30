@@ -1,8 +1,16 @@
+import argparse
 import yaml
 from deploy_utils import deploy_serving, deploy_prometheus
 
 def main():
-    with open('./deployment.yml', 'r') as deplo_yaml:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'config_file', metavar = 'FILE', type=str,
+        help='Path to deployment configuration file.'
+    )
+    args = parser.parse_args()
+
+    with open(args['config_file'], 'r') as deplo_yaml:
         deployment = yaml.load(deplo_yaml, Loader=yaml.FullLoader)
 
     for deploy in deployment:

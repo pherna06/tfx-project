@@ -2,7 +2,14 @@ import yaml
 import subprocess
 
 def main():
-    with open('./deployment.yml', 'r') as deplo_yaml:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'config_file', metavar = 'FILE', type=str,
+        help='Path to deployment configuration file.'
+    )
+    args = parser.parse_args()
+
+    with open(args['config_file'], 'r') as deplo_yaml:
         deployment = yaml.load(deplo_yaml, Loader=yaml.FullLoader)
 
     cmd = ['docker', 'rm', '-f', '']

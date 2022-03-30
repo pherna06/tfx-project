@@ -1,0 +1,197 @@
+- model:
+    model_name     : 'mobile_net'
+    host_model_dir : '/homelocal/pherna06/models/mobile_net'
+    cont_model_dir : '/models/mobile_net'
+    model_port     : 18501
+
+    cont_cpus : '12-15'
+    
+    parallelism   : 'intra_inter_threads'
+    omp_threads   : 4
+    intra_threads : 4
+    inter_threads : 1
+
+    tfserving_image : 'tensorflow/serving:latest-mkl'
+    cont_name : 'mobile_net_4.0'
+  
+  prometheus:
+    prom_config         : 'generate'
+    config_job_name     : 'mobile_net_4.0'
+    config_path         : '/tmp/prometheus_4_0'
+    config_target       : 'esfinge.dacya.ucm.es:18501'
+    config_metrics_path : '/monitoring/prometheus/metrics'
+
+    prom_image : 'prom/prometheus'
+    prom_port  : 19091
+    prom_cpus  : '0-1'
+
+    cont_name : 'mobile_net_4.0-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18501/v1/models/mobile_net:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19091/api/v1/query'
+
+- model:
+    model_name     : 'mobile_net'
+    host_model_dir : '/homelocal/pherna06/models/mobile_net'
+    cont_model_dir : '/models/mobile_net'
+    model_port     : 18502
+
+    cont_cpus : '8-11'
+    
+    parallelism   : 'intra_inter_threads'
+    omp_threads   : 4
+    intra_threads : 4
+    inter_threads : 1
+
+    tfserving_image : 'tensorflow/serving:latest-mkl'
+    cont_name : 'mobile_net_4.1'
+
+  prometheus:
+    prom_config         : 'generate'
+    config_job_name     : 'mobile_net_4.1'
+    config_path         : '/tmp/prometheus_4_1'
+    config_target       : 'esfinge.dacya.ucm.es:18502'
+    config_metrics_path : '/monitoring/prometheus/metrics'
+
+    prom_image : 'prom/prometheus'
+    prom_port  : 19092
+    prom_cpus  : '0-1'
+
+    cont_name : 'mobile_net_4.1-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18502/v1/models/mobile_net:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19092/api/v1/query'
+
+- model:
+    model_name     : 'mobile_net'
+    host_model_dir : '/homelocal/pherna06/models/mobile_net'
+    cont_model_dir : '/models/mobile_net'
+    model_port     : 18503
+
+    cont_cpus : '6-7'
+    
+    parallelism   : 'intra_inter_threads'
+    omp_threads   : 2
+    intra_threads : 2
+    inter_threads : 1
+
+    tfserving_image : 'tensorflow/serving:latest-mkl'
+    cont_name : 'mobile_net_2.0'
+
+  prometheus:
+    prom_config         : 'generate'
+    config_job_name     : 'mobile_net_2.0'
+    config_path         : '/tmp/prometheus_2_0'
+    config_target       : 'esfinge.dacya.ucm.es:18503'
+    config_metrics_path : '/monitoring/prometheus/metrics'
+
+    prom_image : 'prom/prometheus'
+    prom_port  : 19093
+    prom_cpus  : '0-1'
+
+    cont_name : 'mobile_net_2.0-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18503/v1/models/mobile_net:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19093/api/v1/query'
+
+- model:
+    model_name     : 'mobile_net'
+    host_model_dir : '/homelocal/pherna06/models/mobile_net'
+    cont_model_dir : '/models/mobile_net'
+    model_port     : 18504
+
+    cont_cpus : '4-5'
+    
+    parallelism   : 'intra_inter_threads'
+    omp_threads   : 2
+    intra_threads : 2
+    inter_threads : 1
+
+    tfserving_image : 'tensorflow/serving:latest-mkl'
+    cont_name : 'mobile_net_2.1'
+
+  prometheus:
+    prom_config         : 'generate'
+    config_job_name     : 'mobile_net_2.1'
+    config_path         : '/tmp/prometheus_2_1'
+    config_target       : 'esfinge.dacya.ucm.es:18504'
+    config_metrics_path : '/monitoring/prometheus/metrics'
+
+    prom_image : 'prom/prometheus'
+    prom_port  : 19094
+    prom_cpus  : '0-1'
+
+    cont_name : 'mobile_net_2.1-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18504/v1/models/mobile_net:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19094/api/v1/query'
+
+- model:
+    model_name     : 'mobile_net'
+    host_model_dir : '/homelocal/pherna06/models/mobile_net'
+    cont_model_dir : '/models/mobile_net'
+    model_port     : 18505
+
+    cont_cpus : '3'
+    
+    parallelism   : 'intra_inter_threads'
+    omp_threads   : 1
+    intra_threads : 1
+    inter_threads : 1
+
+    tfserving_image : 'tensorflow/serving:latest-mkl'
+    cont_name : 'mobile_net_1.0'
+
+  prometheus:
+    prom_config         : 'generate'
+    config_job_name     : 'mobile_net_1.0'
+    config_path         : '/tmp/prometheus_1_0'
+    config_target       : 'esfinge.dacya.ucm.es:18505'
+    config_metrics_path : '/monitoring/prometheus/metrics'
+
+    prom_image : 'prom/prometheus'
+    prom_port  : 19095
+    prom_cpus  : '0-1'
+
+    cont_name : 'mobile_net_1.0-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18505/v1/models/mobile_net:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19095/api/v1/query'
+
+- model:
+    model_name     : 'mobile_net'
+    host_model_dir : '/homelocal/pherna06/models/mobile_net'
+    cont_model_dir : '/models/mobile_net'
+    model_port     : 18506
+
+    cont_cpus : '2'
+    
+    parallelism   : 'intra_inter_threads'
+    omp_threads   : 1
+    intra_threads : 1
+    inter_threads : 1
+
+    tfserving_image : 'tensorflow/serving:latest-mkl'
+    cont_name : 'mobile_net_1.1'
+
+  prometheus:
+    prom_config         : 'generate'
+    config_job_name     : 'mobile_net_1.1'
+    config_path         : '/tmp/prometheus_1_1'
+    config_target       : 'esfinge.dacya.ucm.es:18506'
+    config_metrics_path : '/monitoring/prometheus/metrics'
+
+    prom_image : 'prom/prometheus'
+    prom_port  : 19096
+    prom_cpus  : '0-1'
+
+    cont_name : 'mobile_net_1.1-prom'
+  
+  utils:
+    serving_uri    : 'http://esfinge.dacya.ucm.es:18506/v1/models/mobile_net:predict'
+    prometheus_uri : 'http://esfinge.dacya.ucm.es:19096/api/v1/query'
