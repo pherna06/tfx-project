@@ -1,5 +1,6 @@
 import yaml
 import random
+import argparse
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -18,8 +19,14 @@ def import_servings_from_deployment_config(config_path):
 
     return servings
 
-_servings = import_servings_from_deployment_config(
-    '/homelocal/pherna06/repos/tfx-project/deploy/deployment.yml')
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    'config_file', metavar = 'FILE', type=str,
+    help='Path to deployment configuration file.'
+)
+args = parser.parse_args()
+
+_servings = import_servings_from_deployment_config(args.config_file)
 
 
 
