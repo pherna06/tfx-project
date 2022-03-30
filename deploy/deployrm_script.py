@@ -9,7 +9,7 @@ def main():
     )
     args = parser.parse_args()
 
-    with open(args['config_file'], 'r') as deplo_yaml:
+    with open(args.config_file, 'r') as deplo_yaml:
         deployment = yaml.load(deplo_yaml, Loader=yaml.FullLoader)
 
     cmd = ['docker', 'rm', '-f', '']
