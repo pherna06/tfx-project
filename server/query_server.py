@@ -19,14 +19,6 @@ def import_servings_from_deployment_config(config_path):
 
     return servings
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    'config_file', metavar = 'FILE', type=str,
-    help='Path to deployment configuration file.'
-)
-args = parser.parse_args()
-
-_servings = import_servings_from_deployment_config(args.config_file)
 
 
 
@@ -64,3 +56,21 @@ def decide_serving():
     size = int(args['size'])
     serving = random.choice(_servings)
     return jsonify(serving)
+
+
+_servings = None
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'config_file', metavar = 'FILE', type=str,
+        help='Path to deployment configuration file.'
+    )
+    args = parser.parse_args()
+
+    _servings = import_servings_from_deployment_config(args.config_file)
+
+    app.run(host='0.0.0.0', port = 5000, debug = True)
+
+if __name__ == '__main__':
+    main()
