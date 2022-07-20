@@ -1,1 +1,0 @@
-../../utils/run_in_docker.sh python ../../utils/tfserving.py half_plus_two.json

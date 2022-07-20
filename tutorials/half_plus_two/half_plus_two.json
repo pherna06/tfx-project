@@ -3,7 +3,7 @@
 		"--name half_plus_two",
 		"-p 8500:8500",
 		"-p 8501:8501",
-		"-v ../../models/half_plus_two_cpu:/models/half_plus_two",
+		"-v $PWD/../../models/half_plus_two_cpu:/models/half_plus_two",
 		"-itd"
 	],
 
@@ -11,6 +11,7 @@
 
 	"tensorflow_model_server" : {
 		"--port" : 8500 ,
-		"--model_name" : "half_plus_two"
+		"--model_name" : "half_plus_two" ,
+		"--model_base_path" : "/models/half_plus_two"
 	}
 }
