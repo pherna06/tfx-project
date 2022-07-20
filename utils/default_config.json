@@ -1,0 +1,66 @@
+{
+	"docker" : [
+		"--name my_container",
+		"-p 8500:8500",
+		"-p 8501:8501",
+		"-v /path/to/my_model:/models/my_model" ,
+		"-itd" ] ,
+
+	"docker_image": "tensorflow/serving" ,
+
+	"tensorflow_model_server" : {
+		"DO_NOT_USE": "conflicting_options" ,
+		
+		"--port" : 8500 ,
+		"--grpc_socket_path" : "" ,
+		"--grpc_channel_arguments" : "" ,
+		"--grpc_max_threads" : 48 ,
+
+		"--rest_api_port" : 0 ,
+		"--rest_api_num_threads" : 48 ,
+		"--rest_api_timeout_in_ms" : 30000 ,
+		"--rest_api_enable_cors_support" : false ,
+
+		"--enable_batching" : false ,
+		"--batching_parameters_file": "" ,
+
+		"--model_config_file" : "" ,
+		"--model_config_file_poll_wait_seconds" : 0 ,
+		"--model_name" : "default" ,
+		"--model_base_path" : "" ,
+		
+		"--num_load_threads" : 0 ,
+		"--num_unload_threads" : 0 ,
+		"--max_num_load_retries" : 5 ,
+		"--load_retry_interval_micros" : 60000000 ,
+		
+		"--file_system_poll_wait_seconds" : 1 ,
+		"--flush_filesystem_caches" : true ,
+		
+		"--tensorflow_session_parallelism" : 0 ,
+		"--tensorflow_intra_op_parallelism" : 0 ,
+		"--tensorflow_inter_op_parallelism" : 0 ,
+
+		"--enable_model_warmup" : true , 
+		"--enable_signature_method_name_check" : false ,
+		"--allow_version_labels_for_unavailable_models" : false ,
+		"--saved_model_tags" : "serve" ,
+
+		"--prefer_tflite_model" : false ,
+		"--num_tflite_pools" : 12 ,
+		"--num_tflite_interpreters_per_pool" : 1 ,
+
+		"--ssl_config_file" : "" ,
+		"--platform_config_file" : "" ,
+		"--monitoring_config_file" : "" ,
+
+		"--per_process_gpu_memory_fraction" : 0.000000 ,
+
+		"--remove_unused_fields_from_bundle_metagraph" : true ,
+
+		"--xla_cpu_compilation_enabled" : false ,
+
+		"--enable_profiler" : true ,
+
+		"--version" : false }
+}

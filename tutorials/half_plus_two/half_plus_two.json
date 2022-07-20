@@ -1,0 +1,16 @@
+{
+	"docker" : [
+		"--name half_plus_two",
+		"-p 8500:8500",
+		"-p 8501:8501",
+		"-v ../../models/half_plus_two_cpu:/models/half_plus_two",
+		"-itd"
+	],
+
+	"docker_image": "tensorflow/serving" ,
+
+	"tensorflow_model_server" : {
+		"--port" : 8500 ,
+		"--model_name" : "half_plus_two"
+	}
+}
