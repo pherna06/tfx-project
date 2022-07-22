@@ -1,17 +1,17 @@
 {
-	"docker" : [
-		"--name half_plus_two",
-		"-p 8500:8500",
-		"-p 8501:8501",
-		"-v $PWD/../../models/half_plus_two_cpu:/models/half_plus_two",
-		"-itd"
-	],
+    "docker" : [
+        "--name half_plus_two",
+        "-p 8500:8500",
+        "-p 8501:8501",
+        "-v $PWD/../../models/half_plus_two_cpu:/models/half_plus_two",
+        "-itd"
+    ],
 
-	"docker_image": "tensorflow/serving" ,
+    "docker_image": "tensorflow/serving",
 
-	"tensorflow_model_server" : {
-		"--port" : 8500 ,
-		"--model_name" : "half_plus_two" ,
-		"--model_base_path" : "/models/half_plus_two"
-	}
+    "tensorflow_model_server" : {
+        "--port" : 8500,
+        "--model_name" : "half_plus_two",
+        "--model_base_path" : "/models/half_plus_two"
+    }
 }
