@@ -429,5 +429,3 @@ For more information see
 ### `--version`
 
 > Display version.
-
-## TODO: config files and miscellaneous
