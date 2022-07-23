@@ -276,6 +276,46 @@ is loaded. If not set, will be auto set based on number of CPUs.
 pool of TfLiteSession. Typically there is one TfLiteSession for each TF Lite model that
 is loaded. If not set, will be 1.
 
+## Model Load/Unload Configuration
+
+### `--num_load_threads`
+
+> The number of threads in the thread-pool used to load servables. If set as 0, we do not
+  use a thread-pool, and servable loads are performed serially in the manager's main work
+  loop, may cause the Serving request to be delayed. Default: 0.
+
+### `--num_unload_threads`
+
+> The number of threads in the thread-pool used to unload servables. If set as 0, we do not
+  use a thread-pool, and servable loads are performed serially in the manager's main work
+  loop, may casue the Serving request to be delayed. Default: 0.
+
+### `--max_num_load_retries`
+
+> Maximum number of times it retries loading a model after the first failure, before
+  giving up. If set to 0, a load is attempted only once. Default: 5.
+
+### `--load_retry_interval_micros`
+
+> The interval, in microseconds, between each servable load retry. If set negative, it
+  does not wait. Default: 1 minute.
+
+## Serving Filesystem Configuration
+
+### `--file_system_poll_wait_seconds`
+
+> Interval in seconds between each poll of the filesystem for new model version. If set to
+  0, poll will be exactly done once and not periodically. Setting this to negative value
+  will disable polling entirely causing ModelServer to indefinitely wait for a new model
+  at startup. Negativa values are reserved for testing purposes only.
+
+### `--flush_filesystem_caches`
+
+> If true (the default), filesystem caches will be flushed after the initial load of all
+  servables, and after each subsequent individual servable reload (if the number of load
+  threads is 1). This reduces memory consumption of the model server, at the potential
+  cost of cache misses if model files are accessed after servables are loaded.
+
 ## TensorFlow Session Parallelism
 
 Note that if `--tensorflow_session_parallelism` is used, then
@@ -296,5 +336,98 @@ Note that if `--tensorflow_session_parallelism` is used, then
 
 > Controls the number of operators that can be executed simultaneously. Auto-configured by
   default. Note that this option is ignored if `--platform_config_file` is non-empty.
+
+## Other Configurations
+
+### `--ssl_config_file`
+
+> If non-empty, read an ASCII SSLConfig protobuf from the supplied file name and set up a
+  secure gRPC channel.
+
+Example `SSLConfig` file:
+
+```
+server_key { value: '$KEY' }
+server_cert { value: '$CERT' }
+custom_ca { value: '$CA' }
+client_verify { value: true }
+```
+
+### `--platform_config_file`
+
+> If non-empty, read an ASCII PlatformConfigMap protobuf from the supplied file name, and
+  use that platform config instead of the TensorFlow platform. If used, `--enable_batching`
+  is ignored.
+
+Example `PlatformConfigMap` file:
+
+```
+platform_configs {
+    key: 'tensorflow'
+    value {
+        source_adapter_config {
+            type_url: 'type.googleapis.com/tensorflow.serving.SavedModelBundleSourceAdapterConfig',
+            value: '\xc2>\x04\x12\x028\x01'
+        }
+    }
+}
+```
+
+The `value` field in `source_adapter_config` holds the serialized
+`SavedModelBundleSourceAdapterConfig` that you want to use.
+
+For more information see
+[Issue 342](https://github.com/tensorflow/serving/issues/342).
+
+
+### `--monitoring_config_file`
+
+> If non-empty, read an ASCII MonitoringConfig protobuf from the supplied file name.
+
+Example `MonitoringConfig` file:
+
+```
+prometheus_config {
+    enable: true
+    path: '/monitoring/prometheus/metrics'
+}
+```
+
+For now, only Prometheus monitoring is allowed. Besides, to read metrics from the above
+URL, you first need to enable the HTTP server by setting `--rest_api_port` flag. You can
+then configure your Prometheus Server to pull metrics from Model Server by passing it the
+values of `--rest_api_port` and `path`.
+
+TensorFlow Serving collects all metrics that are captured by Serving as well as core
+TensorFlow.
+
+## Miscellaneous Flags
+
+### `--per_process_gpu_memory_fraction`
+
+> Fraction that each process occupies of the GPU memory space. The value is between 0.0 and
+  1.0 (with 0.0 as the default). If 1.0, the server will allocate all the memory at
+  startup. If 0.0, TensorFlow will automatically select a value.
+
+### `--remove_unused_fields_from_bundle_metagraph`
+
+> Remove unused fields from MetaGraphDef proto message to save memory.
+
+### `--xla_cpu_compilation_enabled`
+
+> EXPERIMENTAL; CAN BE REMOVED ANYTIME! Enable XLA:CPU JIT (default is disabled). With 
+  XLA:CPU JIT disabled, models utilizaing this feature will return bad Status on first
+  compilation request.
+
+### `--enable_profiler`
+
+> Enable profiler service.
+
+For more information see
+[TensorFlow Profiler](https://www.tensorflow.org/tensorboard/tensorboard_profiling_keras).
+
+### `--version`
+
+> Display version.
 
 ## TODO: config files and miscellaneous
