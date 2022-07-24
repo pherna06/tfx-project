@@ -1,0 +1,15 @@
+{
+    "server": "localhost:8500",
+
+    "op": "GetModelMetadata",
+
+    "model_spec":
+    {
+        "name": "half_plus_two"
+    },
+    
+    "metadata_fields":
+    [
+        "signature_def"
+    ]
+}
