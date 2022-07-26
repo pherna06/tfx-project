@@ -7,5 +7,8 @@ popd () {
 }
 
 pushd ..;
-./utils/run_in_docker.sh python utils/grpc_predict.py 03_grpc_predict_api/classify.json -o 03_grpc_predict_api/result_classify.json;
+./utils/run_in_docker.sh \
+    python utils/grpc_predict.py \
+        -o 03_grpc_predict_api/classify_result.json \
+        03_grpc_predict_api/classify.json;
 popd;

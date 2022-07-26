@@ -1,5 +1,5 @@
 {
-    "server": "127.0.0.1:8500",
+    "server": "127.0.0.1:8501",
 
     "op": "Predict",
 
@@ -9,7 +9,7 @@
         "version": 123,
         "signature_name": "serving_default"
     },
-    
+
     "inputs": {
         "x": [1.0, 2.0, 3.0, 4.0, 5.0]
     },

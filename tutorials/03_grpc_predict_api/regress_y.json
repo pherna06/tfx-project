@@ -7,7 +7,7 @@
     {
         "name": "half_plus_two",
         "version": 123,
-        "signature_name": "regress_x_to_y2"
+        "signature_name": "regress_x_to_y"
     },
 
     "context" : {},

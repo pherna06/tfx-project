@@ -9,6 +9,6 @@ popd () {
 pushd ..;
 ./utils/run_in_docker.sh \
     python utils/grpc_predict.py \
-        -o 03_grpc_predict_api/regress_y2_result.json \
-        03_grpc_predict_api/regress_y2.json;
+        -o 03_grpc_predict_api/regress_y_result.json \
+        03_grpc_predict_api/regress_y.json;
 popd;

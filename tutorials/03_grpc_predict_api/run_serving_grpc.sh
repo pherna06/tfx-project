@@ -7,9 +7,12 @@ popd () {
 }
 
 pushd ..;
-./utils/run_in_docker.sh python utils/tfserving.py 03_grpc_predict_api/half_plus_two.json;
+./utils/run_in_docker.sh python \
+    utils/tfserving.py \
+        03_grpc_predict_api/serving_grpc.json;
 chmod a+rwx docker.sh;
 mv docker.sh 03_grpc_predict_api/;
 popd;
+
 ./docker.sh;
 rm docker.sh;
