@@ -17,7 +17,7 @@ def get_predict_request(
     # ModelSpec
     request.model_spec.name = model_spec['name']
     if 'version' in model_spec:
-        request.model_spec.version = model_spec['version']
+        request.model_spec.version.value = model_spec['version']
     if 'version_label' in model_spec:
         request.model_spec.version_label = model_spec['version_label']
     if 'signature_name' in model_spec:
@@ -43,7 +43,7 @@ def get_predict_result(
     result['model_spec'] = {}
     model_spec = response.model_spec
     result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version']        = model_spec.version.value
     result['model_spec']['version_label']  = model_spec.version_label
     result['model_spec']['signature_name'] = model_spec.signature_name
 
@@ -67,7 +67,7 @@ def do_predict(
     response = stub.Predict(request, 5.0)
     
     # Print result
-    result = get_prediction_result(response)
+    result = get_predict_result(response)
     return result
 
 def set_classification_regression_request(
@@ -79,7 +79,7 @@ def set_classification_regression_request(
     # ModelSpec
     request.model_spec.name = model_spec['name']
     if 'version' in model_spec:
-        request.model_spec.version = model_spec['version']
+        request.model_spec.version.value = model_spec['version']
     if 'version_label' in model_spec:
         request.model_spec.version_label = model_spec['version_label']
     if 'signature_name' in model_spec:
@@ -126,7 +126,7 @@ def get_classification_result(
     result['model_spec'] = {}
     model_spec = response.model_spec
     result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version']        = model_spec.version.value
     result['model_spec']['version_label']  = model_spec.version_label
     result['model_spec']['signature_name'] = model_spec.signature_name
 
@@ -181,7 +181,7 @@ def get_regression_result(
     result['model_spec'] = {}
     model_spec = response.model_spec
     result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version']        = model_spec.version.value
     result['model_spec']['version_label']  = model_spec.version_label
     result['model_spec']['signature_name'] = model_spec.signature_name
 
@@ -223,9 +223,9 @@ def get_multi_inference_request(
         model_spec = task['model_spec']
         request.model_spec.name = model_spec['name']
         if 'version' in model_spec:
-            request.model_spec.version = model_spec['version']
+            request.model_spec.version.value = model_spec['version']
         if 'version_label' in model_spec:
-            request.model_spec.version = model_spec['version_label']
+            request.model_spec.version_label = model_spec['version_label']
         if 'signature_name' in model_spec:
             request.model_spec.signature_name = model_spec['signature_name']
 
@@ -287,7 +287,7 @@ def get_get_model_metadata_request(
     # ModelSpec
     request.model_spec.name = model_spec['name']
     if 'version' in model_spec:
-        request.model_spec.version = model_spec['version']
+        request.model_spec.version.value = model_spec['version']
     if 'version_label' in model_spec:
         request.model_spec.version_label = model_spec['version_label']
     if 'signature_name' in model_spec:
@@ -342,7 +342,7 @@ def get_get_model_metadata_result(
     result['model_spec'] = {}
     model_spec = response.model_spec
     result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version']        = model_spec.version.value
     result['model_spec']['version_label']  = model_spec.version_label
     result['model_spec']['signature_name'] = model_spec.signature_name
 
@@ -439,9 +439,10 @@ def main():
 
     if   query['op'] == 'Predict':
         result = do_predict(
-                stub                ,
-                query['model_spec'] ,
-                query['inputs']     )
+                stub                   ,
+                query['model_spec']    ,
+                query['inputs']        ,
+                query['output_filter'] )
 
     elif query['op'] == 'Classify':
         result = do_classify(

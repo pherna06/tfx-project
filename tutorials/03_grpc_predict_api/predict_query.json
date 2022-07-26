@@ -1,8 +1,0 @@
-{
-    "server": "localhost:8500",
-
-    "op": "Predict",
-
-    "model_spec": {
-        "name": "half_plus_two" }
-}

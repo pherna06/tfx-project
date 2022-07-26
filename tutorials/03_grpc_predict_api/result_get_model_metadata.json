@@ -1,7 +1,7 @@
 {
     "model_spec": {
         "name": "half_plus_two",
-        "version": "value: 123\n",
+        "version": 123,
         "version_label": "",
         "signature_name": ""
     },
@@ -30,6 +30,111 @@
                 "outputs": {
                     "outputs": {
                         "name": "y3:0",
+                        "dtype": 1,
+                        "tensor_shape": {
+                            "dim": [
+                                {
+                                    "size": -1,
+                                    "name": ""
+                                },
+                                {
+                                    "size": 1,
+                                    "name": ""
+                                }
+                            ],
+                            "unknown_rank": false
+                        }
+                    }
+                },
+                "method_name": "tensorflow/serving/regress"
+            },
+            "serving_default": {
+                "inputs": {
+                    "x": {
+                        "name": "x:0",
+                        "dtype": 1,
+                        "tensor_shape": {
+                            "dim": [
+                                {
+                                    "size": -1,
+                                    "name": ""
+                                },
+                                {
+                                    "size": 1,
+                                    "name": ""
+                                }
+                            ],
+                            "unknown_rank": false
+                        }
+                    }
+                },
+                "outputs": {
+                    "y": {
+                        "name": "y:0",
+                        "dtype": 1,
+                        "tensor_shape": {
+                            "dim": [
+                                {
+                                    "size": -1,
+                                    "name": ""
+                                },
+                                {
+                                    "size": 1,
+                                    "name": ""
+                                }
+                            ],
+                            "unknown_rank": false
+                        }
+                    }
+                },
+                "method_name": "tensorflow/serving/predict"
+            },
+            "classify_x_to_y": {
+                "inputs": {
+                    "inputs": {
+                        "name": "tf_example:0",
+                        "dtype": 7,
+                        "tensor_shape": {
+                            "dim": [],
+                            "unknown_rank": true
+                        }
+                    }
+                },
+                "outputs": {
+                    "scores": {
+                        "name": "y:0",
+                        "dtype": 1,
+                        "tensor_shape": {
+                            "dim": [
+                                {
+                                    "size": -1,
+                                    "name": ""
+                                },
+                                {
+                                    "size": 1,
+                                    "name": ""
+                                }
+                            ],
+                            "unknown_rank": false
+                        }
+                    }
+                },
+                "method_name": "tensorflow/serving/classify"
+            },
+            "regress_x_to_y2": {
+                "inputs": {
+                    "inputs": {
+                        "name": "tf_example:0",
+                        "dtype": 7,
+                        "tensor_shape": {
+                            "dim": [],
+                            "unknown_rank": true
+                        }
+                    }
+                },
+                "outputs": {
+                    "outputs": {
+                        "name": "y2:0",
                         "dtype": 1,
                         "tensor_shape": {
                             "dim": [
@@ -79,111 +184,6 @@
                     }
                 },
                 "method_name": "tensorflow/serving/regress"
-            },
-            "regress_x_to_y2": {
-                "inputs": {
-                    "inputs": {
-                        "name": "tf_example:0",
-                        "dtype": 7,
-                        "tensor_shape": {
-                            "dim": [],
-                            "unknown_rank": true
-                        }
-                    }
-                },
-                "outputs": {
-                    "outputs": {
-                        "name": "y2:0",
-                        "dtype": 1,
-                        "tensor_shape": {
-                            "dim": [
-                                {
-                                    "size": -1,
-                                    "name": ""
-                                },
-                                {
-                                    "size": 1,
-                                    "name": ""
-                                }
-                            ],
-                            "unknown_rank": false
-                        }
-                    }
-                },
-                "method_name": "tensorflow/serving/regress"
-            },
-            "classify_x_to_y": {
-                "inputs": {
-                    "inputs": {
-                        "name": "tf_example:0",
-                        "dtype": 7,
-                        "tensor_shape": {
-                            "dim": [],
-                            "unknown_rank": true
-                        }
-                    }
-                },
-                "outputs": {
-                    "scores": {
-                        "name": "y:0",
-                        "dtype": 1,
-                        "tensor_shape": {
-                            "dim": [
-                                {
-                                    "size": -1,
-                                    "name": ""
-                                },
-                                {
-                                    "size": 1,
-                                    "name": ""
-                                }
-                            ],
-                            "unknown_rank": false
-                        }
-                    }
-                },
-                "method_name": "tensorflow/serving/classify"
-            },
-            "serving_default": {
-                "inputs": {
-                    "x": {
-                        "name": "x:0",
-                        "dtype": 1,
-                        "tensor_shape": {
-                            "dim": [
-                                {
-                                    "size": -1,
-                                    "name": ""
-                                },
-                                {
-                                    "size": 1,
-                                    "name": ""
-                                }
-                            ],
-                            "unknown_rank": false
-                        }
-                    }
-                },
-                "outputs": {
-                    "y": {
-                        "name": "y:0",
-                        "dtype": 1,
-                        "tensor_shape": {
-                            "dim": [
-                                {
-                                    "size": -1,
-                                    "name": ""
-                                },
-                                {
-                                    "size": 1,
-                                    "name": ""
-                                }
-                            ],
-                            "unknown_rank": false
-                        }
-                    }
-                },
-                "method_name": "tensorflow/serving/predict"
             }
         }
     }
