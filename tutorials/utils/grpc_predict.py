@@ -1,3 +1,6 @@
+import argparse
+import json
+
 import grpc
 import tensorflow as tf
 
@@ -38,17 +41,17 @@ def get_predict_result(
 
     # ModelSpec
     result['model_spec'] = {}
-    result_model_spec = response.model_spec
-    result['model_spec']['name']           = result_model_spec.name
-    result['model_spec']['version']        = result_model_spec.version
-    result['model_spec']['version_label']  = result_model_spec.version_label
-    result['model_spec']['signature_name'] = result_model_spec.signature_name
+    model_spec = response.model_spec
+    result['model_spec']['name']           = model_spec.name
+    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version_label']  = model_spec.version_label
+    result['model_spec']['signature_name'] = model_spec.signature_name
 
     # Outputs
     result['outputs'] = {}
-    result_outputs = response.outputs
-    for alias in result_outputs:
-        result['outputs'][alias] = result_outputs[alias].float_val
+    outputs = response.outputs
+    for alias in outputs:
+        result['outputs'][alias] = outputs[alias].float_val
 
     return result
 
@@ -61,16 +64,11 @@ def do_predict(
     request = get_predict_request(model_spec, inputs, output_filter)
 
     # >> Call Service <<
-    rpc = stub.Predict(request, 5.0)
+    response = stub.Predict(request, 5.0)
     
     # Print result
-    exception = rpc.exception()
-    if exception:
-        print(exception)
-    else:
-        result = get_prediction_result(rpc.result())
-        
-        print(result)
+    result = get_prediction_result(response)
+    return result
 
 def set_classification_regression_request(
         request    ,
@@ -126,22 +124,22 @@ def get_classification_result(
 
     # ModelSpec
     result['model_spec'] = {}
-    result_model_spec = response.model_spec
-    result['model_spec']['name']           = result_model_spec.name
-    result['model_spec']['version']        = result_model_spec.version
-    result['model_spec']['version_label']  = result_model_spec.version_label
-    result['model_spec']['signature_name'] = result_model_spec.signature_name
+    model_spec = response.model_spec
+    result['model_spec']['name']           = model_spec.name
+    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version_label']  = model_spec.version_label
+    result['model_spec']['signature_name'] = model_spec.signature_name
 
     # ClassificationResult
     result['classifications'] = []
-    result_classifications = grpc.result().result.classifications
-    for classification in result_classifications:
+    classifications = response.result.classifications
+    for classification in classifications:
         result['classifications'].append({})
         for cl in classification.classes:
             result['classifications'][-1]['label'] = cl.label
             result['classifications'][-1]['score'] = cl.score
 
-    print(result)
+    return result
 
 
 def do_classify(
@@ -153,15 +151,10 @@ def do_classify(
     request = get_classification_request(model_spec, context, examples)
 
     # >> Call Service <<
-    rpc = stub.Classify(request, 5.0)
+    response = stub.Classify(request, 5.0)
 
-    exception = rpc.exception()
-    if exception:
-        print(exception)
-    else:
-        result = get_classification_result(rpc.result())
-
-        print(result)
+    result = get_classification_result(response)
+    return result
 
 def get_regression_request(
         model_spec ,
@@ -186,19 +179,19 @@ def get_regression_result(
 
     # ModelSpec
     result['model_spec'] = {}
-    result_model_spec = response.model_spec
-    result['model_spec']['name']           = result_model_spec.name
-    result['model_spec']['version']        = result_model_spec.version
-    result['model_spec']['version_label']  = result_model_spec.version_label
-    result['model_spec']['signature_name'] = result_model_spec.signature_name
+    model_spec = response.model_spec
+    result['model_spec']['name']           = model_spec.name
+    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version_label']  = model_spec.version_label
+    result['model_spec']['signature_name'] = model_spec.signature_name
 
     # RegressionResult
     result['regressions'] = []
-    result_regressions = grpc.result().result.regressions
-    for regression in result_regressions:
+    regressions = response.result.regressions
+    for regression in regressions:
         result['regressions'].append(regression.value)
 
-    print(result)
+    return result
 
 def do_regress(
         stub          ,
@@ -209,15 +202,10 @@ def do_regress(
     request = get_regression_request(model_spec, context, examples)
 
     # >> Call Service <<
-    rpc = stub.Regress(request, 5.0)
+    response = stub.Regress(request, 5.0)
 
-    exception = rpc.exception()
-    if exception:
-        print(exception)
-    else:
-        result = get_regression_result(rpc.result())
-
-        print(result)
+    result = get_regression_result(response)
+    return results
 
 def get_multi_inference_request(
         tasks    ,
@@ -284,19 +272,14 @@ def do_multi_inference(
 
     request = get_multi_inference_request(tasks, context, examples)
 
-    rpc = stub.MultiInference(request, 5.0)
+    response = stub.MultiInference(request, 5.0)
 
-    exception = rpc.exception()
-    if exception:
-        print(exception)
-    else:
-        results = get_multi_inference_results(rpc.result())
-
-        print(results)
+    results = get_multi_inference_results(response)
+    return results
 
 def get_get_model_metadata_request(
         model_spec      ,
-        metadata_fields ):
+        metadata_field  ):
 
     from tensorflow_serving.apis import get_model_metadata_pb2
     request = get_model_metadata_pb2.GetModelMetadataRequest()
@@ -311,8 +294,8 @@ def get_get_model_metadata_request(
         request.model_spec.signature_name = model_spec['signature_name']
 
     # MetadataFields
-    for field in metadata_fields:
-        request.metadata_fields.append(field)
+    for field in metadata_field:
+        request.metadata_field.append(field)
 
     return request
 
@@ -332,12 +315,13 @@ def get_tensor_info_result(
         result['composite_tensor'] = []
         ## do not parse 'type_spec'
         for tensor_comp in tensor_info.composite_tensor.components:
-            result['composite_tensor'].append(get_tensor_info_result(tensor_comp)
+            result['composite_tensor'].append (get_tensor_info_result(tensor_comp) )
 
     # DataType (enum)
     result['dtype'] = tensor_info.dtype
 
     # TensorShape
+    result['tensor_shape'] = {}
     result['tensor_shape']['dim'] = []
     for dim in tensor_info.tensor_shape.dim:
         dim_dict = {
@@ -356,54 +340,61 @@ def get_get_model_metadata_result(
 
     # ModelSpec
     result['model_spec'] = {}
-    result_model_spec = response.model_spec
-    result['model_spec']['name']           = result_model_spec.name
-    result['model_spec']['version']        = result_model_spec.version
-    result['model_spec']['version_label']  = result_model_spec.version_label
-    result['model_spec']['signature_name'] = result_model_spec.signature_name
+    model_spec = response.model_spec
+    result['model_spec']['name']           = model_spec.name
+    result['model_spec']['version']        = model_spec.version
+    result['model_spec']['version_label']  = model_spec.version_label
+    result['model_spec']['signature_name'] = model_spec.signature_name
 
     # Metadata
     result['metadata'] = {}
-    result_metadata = response.metadata
-    for field in result_metadata:
+    metadata = response.metadata
+    for field in metadata:
+        if field != 'signature_def':
+            print('unknown metadata field:', field)
+            continue
+
+        ## TODO getter method for SignatureDefMap
+        from tensorflow_serving.apis import get_model_metadata_pb2
+        signature_map = get_model_metadata_pb2.SignatureDefMap()
+        if metadata[field].Is(signature_map.DESCRIPTOR):
+            metadata[field].Unpack(signature_map)
+
         result['metadata'][field] = {}
 
-        # Inputs
-        result['metadata'][field]['inputs'] = {}
-        inputs = result['metadata'][field]['inputs']
-        for alias in result_metadata[field].inputs:
-            tensor_info = result_metadata[field].inputs[alias]
-            inputs[alias] = get_tensor_info_result(tensor_info)
+        for signature_key in signature_map.signature_def:
+            result['metadata'][field][signature_key] = {}
+            signature = result['metadata'][field][signature_key]
+            response_signature = signature_map.signature_def[signature_key]
 
-        # Outputs
-        result['metadata'][field]['outputs'] = {}
-        outputs = result['metadata'][field]['outputs']
-        for alias in result_metadata[field].outputs:
-            tensor_info = result_metadata[field].outputs[alias]
-            outputs[alias] = get_tensor_info_result(tensor_info)
+            # Inputs
+            signature['inputs'] = {}
+            for alias in response_signature.inputs:
+                tensor_info = response_signature.inputs[alias]
+                signature['inputs'][alias] = get_tensor_info_result(tensor_info)
 
-        # MethodName
-        result['metadata'][field]['method_name'] = result_metadata[field].method_name
+            # Outputs
+            signature['outputs'] = {}
+            for alias in response_signature.outputs:
+                tensor_info = response_signature.outputs[alias]
+                signature['outputs'][alias] = get_tensor_info_result(tensor_info)
+
+            # MethodName
+            signature['method_name'] = response_signature.method_name
 
     return result
 
 def do_get_model_metadata(
         stub            ,
         model_spec      ,
-        metadata_fields ):
+        metadata_field  ):
 
-    request = get_get_model_metadata_request(model_spec, metadata_fields)
+    request = get_get_model_metadata_request(model_spec, metadata_field)
 
-    rpc = stub.GetModelMetadata(request, 5.0)
+    response = stub.GetModelMetadata(request, 5.0)
 
-    exception = rpc.exception()
-    if exception:
-        print(exception)
-    else:
-        result = get_get_model_metadata_result(rpc.result())
-
-        print(result)
-
+    result = get_get_model_metadata_result(response)
+    return result
 
 
 ############################
@@ -418,6 +409,11 @@ def get_parser():
     parser.add_argument(
             'query', metavar='QUERY', help=query_help,
             type=str )
+
+    output_help = "Path to JSON query result file"
+    parser.add_argument(
+            '-o', '--output', metavar='output', help=output_help,
+            type=str, default=None )
 
     return parser
 
@@ -434,7 +430,7 @@ def main():
         return -1
 
     channel = grpc.insecure_channel(query['server'])
-    stub = prediction_service_pb2_grpc.PredictionService(channel)
+    stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
 
     # Op parsing
     if 'op' not in query:
@@ -442,41 +438,48 @@ def main():
         return -1
 
     if   query['op'] == 'Predict':
-        do_predict(
+        result = do_predict(
                 stub                ,
                 query['model_spec'] ,
                 query['inputs']     )
 
     elif query['op'] == 'Classify':
-        do_classify(
+        result = do_classify(
                 stub                ,
                 query['model_spec'] ,
                 query['context']    ,
                 query['examples']   )
 
     elif query['op'] == 'Regress':
-        do_regress(
+        result = do_regress(
                 stub                ,
                 query['model_spec'] ,
                 query['context']    ,
                 query['examples']   )
 
     elif query['op'] == 'MultiInference':
-        do_multi_inference(
+        result = do_multi_inference(
                 stub              ,
                 query['tasks']    ,
                 query['context']  ,
                 query['examples'] )
 
     elif query['op'] == 'GetModelMetadata':
-        do_get_model_metadata(
-                stub                     ,
-                query['model_spec']      ,
-                query['metadata_fields'] )
+        result = do_get_model_metadata(
+                stub                    ,
+                query['model_spec']     ,
+                query['metadata_field'] )
 
     else:
         print('ERROR: unknown operation')
         return -1
+
+    if args.output:
+        with open(args.output, 'w') as outjson:
+            json.dump(result, outjson, default=str, indent=4)
+    else:
+        print(result)
+
 
 if __name__ == '__main__':
     main()

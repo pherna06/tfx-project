@@ -9,7 +9,7 @@
     "docker_image": "tensorflow/serving",
 
     "tensorflow_model_server" : {
-        "--model_name" : "half_plus_two",
-        "--model_base_path" : "/models/half_plus_two"
+        "--model_name": "half_plus_two",
+        "--model_base_path": "/models/half_plus_two"
     }
 }

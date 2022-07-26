@@ -98,9 +98,11 @@ fi
 [[ "${CMD}" = "" ]] && usage
 [[ ! -x $(command -v docker) ]] && echo "ERROR: 'docker' command missing from PATH." && usage
 
-echo "== Pulling docker image: ${IMAGE}"
-if ! docker pull ${IMAGE} ; then
-  echo "WARNING: Failed to docker pull image ${IMAGE}"
+if ! docker image inspect --format='{{.ID}}' ${IMAGE} ; then
+  echo "== Pulling docker image: ${IMAGE}"
+  if ! docker pull ${IMAGE} ; then
+    echo "WARNING: Failed to docker pull image ${IMAGE}"
+  fi
 fi
 
 echo "== Running cmd: ${CMD}"
