@@ -7,47 +7,6 @@
     },
     "metadata": {
         "signature_def": {
-            "regress_x2_to_y3": {
-                "inputs": {
-                    "inputs": {
-                        "name": "x2:0",
-                        "dtype": 1,
-                        "tensor_shape": {
-                            "dim": [
-                                {
-                                    "size": -1,
-                                    "name": ""
-                                },
-                                {
-                                    "size": 1,
-                                    "name": ""
-                                }
-                            ],
-                            "unknown_rank": false
-                        }
-                    }
-                },
-                "outputs": {
-                    "outputs": {
-                        "name": "y3:0",
-                        "dtype": 1,
-                        "tensor_shape": {
-                            "dim": [
-                                {
-                                    "size": -1,
-                                    "name": ""
-                                },
-                                {
-                                    "size": 1,
-                                    "name": ""
-                                }
-                            ],
-                            "unknown_rank": false
-                        }
-                    }
-                },
-                "method_name": "tensorflow/serving/regress"
-            },
             "serving_default": {
                 "inputs": {
                     "x": {
@@ -88,38 +47,6 @@
                     }
                 },
                 "method_name": "tensorflow/serving/predict"
-            },
-            "classify_x_to_y": {
-                "inputs": {
-                    "inputs": {
-                        "name": "tf_example:0",
-                        "dtype": 7,
-                        "tensor_shape": {
-                            "dim": [],
-                            "unknown_rank": true
-                        }
-                    }
-                },
-                "outputs": {
-                    "scores": {
-                        "name": "y:0",
-                        "dtype": 1,
-                        "tensor_shape": {
-                            "dim": [
-                                {
-                                    "size": -1,
-                                    "name": ""
-                                },
-                                {
-                                    "size": 1,
-                                    "name": ""
-                                }
-                            ],
-                            "unknown_rank": false
-                        }
-                    }
-                },
-                "method_name": "tensorflow/serving/classify"
             },
             "regress_x_to_y2": {
                 "inputs": {
@@ -184,6 +111,79 @@
                     }
                 },
                 "method_name": "tensorflow/serving/regress"
+            },
+            "regress_x2_to_y3": {
+                "inputs": {
+                    "inputs": {
+                        "name": "x2:0",
+                        "dtype": 1,
+                        "tensor_shape": {
+                            "dim": [
+                                {
+                                    "size": -1,
+                                    "name": ""
+                                },
+                                {
+                                    "size": 1,
+                                    "name": ""
+                                }
+                            ],
+                            "unknown_rank": false
+                        }
+                    }
+                },
+                "outputs": {
+                    "outputs": {
+                        "name": "y3:0",
+                        "dtype": 1,
+                        "tensor_shape": {
+                            "dim": [
+                                {
+                                    "size": -1,
+                                    "name": ""
+                                },
+                                {
+                                    "size": 1,
+                                    "name": ""
+                                }
+                            ],
+                            "unknown_rank": false
+                        }
+                    }
+                },
+                "method_name": "tensorflow/serving/regress"
+            },
+            "classify_x_to_y": {
+                "inputs": {
+                    "inputs": {
+                        "name": "tf_example:0",
+                        "dtype": 7,
+                        "tensor_shape": {
+                            "dim": [],
+                            "unknown_rank": true
+                        }
+                    }
+                },
+                "outputs": {
+                    "scores": {
+                        "name": "y:0",
+                        "dtype": 1,
+                        "tensor_shape": {
+                            "dim": [
+                                {
+                                    "size": -1,
+                                    "name": ""
+                                },
+                                {
+                                    "size": 1,
+                                    "name": ""
+                                }
+                            ],
+                            "unknown_rank": false
+                        }
+                    }
+                },
+                "method_name": "tensorflow/serving/classify"
             }
         }
     }

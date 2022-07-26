@@ -6,6 +6,183 @@ import tensorflow as tf
 
 from tensorflow_serving.apis import prediction_service_pb2_grpc
 
+# ModelSpec #
+
+def set_model_spec(
+        message    ,
+        model_spec ):
+
+    if 'name' in model_spec:
+        message.name = model_spec['name']
+    if 'version' in model_spec:
+        message.version.value = model_spec['version']
+    if 'version_label' in model_spec:
+        message.version_label = model_spec['version_label']
+    if 'signature_name' in model_spec:
+        message.signature_name = model_spec['signature_name']
+
+def parse_model_spec(
+        model_spec ):
+
+    parsed = {}
+
+    parsed['name']           = model_spec.name
+    parsed['version']        = model_spec.version.value
+    parsed['version_label']  = model_spec.version_label
+    parsed['signature_name'] = model_spec.signature_name
+
+    return parsed
+
+### ### ### ###
+
+# TensorProto #
+
+def set_tensor_proto(
+        message      ,
+        tensor_proto ):
+
+    message.CopyFrom( tf.make_tensor_proto(tensor_proto) )
+
+def parse_tensor_proto(
+        tensor_proto ):
+
+    return tensor_proto.float_val
+
+### ### ### ###
+
+# tensorflow.serving.Input #
+
+def set_tensorflow_serving_input(
+        message  ,
+        context  ,
+        examples ):
+
+    # ExampleListWithContext
+    if context:
+        message_context = message.example_list_with_context.context
+        for feature in message_context:
+            ## context[feature] is list
+            message_context.features.feature[feature].float_list.value.extend(context[feature])
+        for example in examples:
+            message_example = message.example_list_with_context.examples.add()
+            for feature in message_example:
+                ## exapmle[feat] is list
+                message_example.features.feature[feature].float_list.value.extend(example[feature])
+    # ExampleList
+    else:
+        for example in examples:
+            message_example = message.example_list.examples.add()
+            for feature in example:
+                ## ex[feat] is list
+                message_example.features.feature[feature].float_list.value.extend(example[feature])
+
+
+# ClassificationRequest | RegressionRequest #
+
+def set_classification_regression_request(
+        request    ,
+        model_spec ,
+        context    ,
+        examples   ):
+
+    # ModelSpec
+    set_model_spec(request.model_spec, model_spec)
+
+    # Examples (and context)
+    set_tensorflow_serving_input(request.input, context, examples)
+
+### ### ### ###
+
+# Classifications #
+
+def parse_classifications(
+        classifications ):
+
+    parsed = []
+
+    for classification in classifications:
+        parsed.append({})
+        for msg_class in classification.classes:
+            parsed[-1]['label'] = msg_class.label
+            parsed[-1]['score'] = msg_class.score
+
+    return parsed
+
+### ### ### ###
+
+# TensorInfo #
+
+def parse_tensor_info(
+        tensor_info ):
+
+    parsed = {}
+
+    # Encoding
+    if tensor_info.HasField('name'):
+        parsed['name'] = tensor_info.name
+    if tensor_info.HasField('coo_sparse'):
+        parsed['values_tensor_name']      = tensor_info.coo_sparse.values_tensor_name
+        parsed['indices_tensor_name']     = tensor_info.coo_sparse.indices_tensor_name
+        parsed['dense_shape_tensor_name'] = tensor_info.coo_sparse.dense_shape_tensor_name
+    if tensor_info.HasField('composite_tensor'):
+        parsed['composite_tensor'] = []
+        ## do not parse 'type_spec'
+        for tensor_comp in tensor_info.composite_tensor.components:
+            parsed['composite_tensor'].append (parse_tensor_info(tensor_comp) )
+
+    # DataType (enum)
+    parsed['dtype'] = tensor_info.dtype
+
+    # TensorShape
+    parsed['tensor_shape'] = {}
+    parsed['tensor_shape']['dim'] = []
+    for dim in tensor_info.tensor_shape.dim:
+        dim_dict = {
+            'size': dim.size ,
+            'name': dim.name }
+        parsed['tensor_shape']['dim'].append(dim_dict)
+
+    parsed['tensor_shape']['unknown_rank'] = tensor_info.tensor_shape.unknown_rank
+
+    return parsed
+
+### ### ### ###
+
+# SignatureDef #
+
+def parse_signature_def(
+        signature_def ):
+
+    parsed = {}
+
+    # Inputs
+    parsed['inputs'] = {}
+    for alias in signature_def.inputs:
+        tensor_info = signature_def.inputs[alias]
+        parsed['inputs'][alias] = parse_tensor_info(tensor_info)
+
+    # Outputs
+    parsed['outputs'] = {}
+    for alias in signature_def.outputs:
+        tensor_info = signature_def.outputs[alias]
+        parsed['outputs'][alias] = parse_tensor_info(tensor_info)
+
+    # MethodName
+    parsed['method_name'] = signature_def.method_name
+
+    return parsed
+
+### ### ### ###
+
+### ### ### ### ### ### ### ###
+### ### ### ### ### ### ### ###
+### ### ### ### ### ### ### ###
+
+
+
+
+# Predict #
+
 def get_predict_request(
         model_spec    ,
         inputs        ,
@@ -15,18 +192,11 @@ def get_predict_request(
     request = predict_pb2.PredictRequest()
 
     # ModelSpec
-    request.model_spec.name = model_spec['name']
-    if 'version' in model_spec:
-        request.model_spec.version.value = model_spec['version']
-    if 'version_label' in model_spec:
-        request.model_spec.version_label = model_spec['version_label']
-    if 'signature_name' in model_spec:
-        request.model_spec.signature_name = model_spec['signature_name']
+    set_model_spec(request.model_spec, model_spec)
 
     # Inputs
     for alias in inputs:
-        request.inputs[alias].CopyFrom(
-                tf.make_tensor_proto(inputs[alias]) )
+        set_tensor_proto( request.inputs[alias], inputs[alias] )
 
     # OutputFilter
     for alias in output_filter:
@@ -34,26 +204,21 @@ def get_predict_request(
 
     return request
 
-def get_predict_result(
+def parse_predict_result(
         response ):
 
-    result = {}
+    parsed = {}
 
     # ModelSpec
-    result['model_spec'] = {}
-    model_spec = response.model_spec
-    result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version.value
-    result['model_spec']['version_label']  = model_spec.version_label
-    result['model_spec']['signature_name'] = model_spec.signature_name
+    parsed['model_spec'] = parse_model_spec(response.model_spec)
 
     # Outputs
-    result['outputs'] = {}
+    parsed['outputs'] = {}
     outputs = response.outputs
-    for alias in outputs:
-        result['outputs'][alias] = outputs[alias].float_val
+    for alias in response.outputs:
+        parsed['outputs'][alias] = parse_tensor_proto(response.outputs[alias])
 
-    return result
+    return parsed
 
 def do_predict(
         stub          ,
@@ -67,39 +232,15 @@ def do_predict(
     response = stub.Predict(request, 5.0)
     
     # Print result
-    result = get_predict_result(response)
+    result = parse_predict_result(response)
     return result
 
-def set_classification_regression_request(
-        request    ,
-        model_spec ,
-        context    ,
-        examples   ):
+### ### ### ###
 
-    # ModelSpec
-    request.model_spec.name = model_spec['name']
-    if 'version' in model_spec:
-        request.model_spec.version.value = model_spec['version']
-    if 'version_label' in model_spec:
-        request.model_spec.version_label = model_spec['version_label']
-    if 'signature_name' in model_spec:
-        request.model_spec.signature_name = model_spec['signature_name']
 
-    # Examples (and context)
-    if context:
-        context_example = request.input.example_list_with_context.context
-        for feat in context:
-            ## context[feat] is list
-            content_example.features.feature[feat].float_list.value.extend(context[feat])
-        for ex in examples:
-            example = request.input.example_list_with_context.examples.add()
-            for feat in ex:
-                example.features.feature[feat].float_list.value.extend(ex[feat])
-    else:
-        for ex in examples:
-            example = request.input.example_list.examples.add()
-            for feat in ex:
-                example.features.feature[feat].float_list.value.extend(ex[feat])
+
+
+# Classify #
 
 def get_classification_request(
         model_spec ,
@@ -117,29 +258,22 @@ def get_classification_request(
 
     return request
 
-def get_classification_result(
-        response ):
+def parse_classification_result(
+        response      ,
+        multi = False ):
 
-    result = {}
+    parsed = {}
 
     # ModelSpec
-    result['model_spec'] = {}
-    model_spec = response.model_spec
-    result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version.value
-    result['model_spec']['version_label']  = model_spec.version_label
-    result['model_spec']['signature_name'] = model_spec.signature_name
+    parsed['model_spec'] = parse_model_spec(response.model_spec)
 
     # ClassificationResult
-    result['classifications'] = []
-    classifications = response.result.classifications
-    for classification in classifications:
-        result['classifications'].append({})
-        for cl in classification.classes:
-            result['classifications'][-1]['label'] = cl.label
-            result['classifications'][-1]['score'] = cl.score
+    if multi:
+        parsed['classifications'] = parse_classifications(response.classification_result.classifications)
+    else:
+        parsed['classifications'] = parse_classifications(response.result.classifications)
 
-    return result
+    return parsed
 
 
 def do_classify(
@@ -153,8 +287,15 @@ def do_classify(
     # >> Call Service <<
     response = stub.Classify(request, 5.0)
 
-    result = get_classification_result(response)
+    result = parse_classification_result(response)
     return result
+
+### ### ### ###
+
+
+
+
+# Regress #
 
 def get_regression_request(
         model_spec ,
@@ -172,26 +313,27 @@ def get_regression_request(
 
     return request
 
-def get_regression_result(
-        response ):
+def parse_regression_result(
+        response      ,
+        multi = False ):
 
-    result = {}
+    parsed = {}
 
     # ModelSpec
-    result['model_spec'] = {}
-    model_spec = response.model_spec
-    result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version.value
-    result['model_spec']['version_label']  = model_spec.version_label
-    result['model_spec']['signature_name'] = model_spec.signature_name
+    parsed['model_spec'] = parse_model_spec(response.model_spec)
 
     # RegressionResult
-    result['regressions'] = []
-    regressions = response.result.regressions
-    for regression in regressions:
-        result['regressions'].append(regression.value)
+    parsed['regressions'] = []
 
-    return result
+    if multi:
+        regressions = response.regression_result.regressions
+    else:
+        regressions = response.result.regressions
+
+    for regression in regressions:
+        parsed['regressions'].append(regression.value)
+
+    return parsed
 
 def do_regress(
         stub          ,
@@ -204,8 +346,14 @@ def do_regress(
     # >> Call Service <<
     response = stub.Regress(request, 5.0)
 
-    result = get_regression_result(response)
-    return results
+    result = parse_regression_result(response)
+    return result
+
+### ### ### ###
+
+
+
+# MultiInference #
 
 def get_multi_inference_request(
         tasks    ,
@@ -220,49 +368,29 @@ def get_multi_inference_request(
         request = multi_request.tasks.add()
         
         # ModelSpec
-        model_spec = task['model_spec']
-        request.model_spec.name = model_spec['name']
-        if 'version' in model_spec:
-            request.model_spec.version.value = model_spec['version']
-        if 'version_label' in model_spec:
-            request.model_spec.version_label = model_spec['version_label']
-        if 'signature_name' in model_spec:
-            request.model_spec.signature_name = model_spec['signature_name']
+        set_model_spec(request.model_spec, task['model_spec'])
 
         # MethodName
         request.method_name = task['method_name']
 
     # Examples (and context)
-    if context:
-        context_example = multi_request.input.example_list_with_context.context
-        for feat in context:
-            ## context[feat] is list
-            content_example.features.feature[feat].float_list.value.extend(context[feat])
-        for ex in examples:
-            example = multi_request.input.example_list_with_context.examples.add()
-            for feat in ex:
-                example.features.feature[feat].float_list.value.extend(ex[feat])
-    else:
-        for ex in examples:
-            example = multi_request.input.example_list.examples.add()
-            for feat in ex:
-                example.features.feature[feat].float_list.value.extend(ex[feat])
+    set_tensorflow_serving_input(multi_request.input, context, examples)
 
-def get_multi_inference_results(
+    return multi_request
+
+def parse_multi_inference_results(
         response ):
 
-    results = []
+    parsed = []
 
-    for inf_result in response.results:
-        result = {}
-        if inf_result.HasField('classification_result'):
-            result = get_classification_result(inf_result.classification_result)
-        if inf_result.HasField('regression_result'):
-            result = get_regression_result(inf_result.regression_result)
+    for result in response.results:
+        if result.HasField('classification_result'):
+            parsed.append( parse_classification_result(result, multi=True) )
 
-        results.append(result)
+        if result.HasField('regression_result'):
+            parsed.append( parse_regression_result(result, multi=True) )
 
-    return results
+    return parsed
 
 def do_multi_inference(
         stub     ,
@@ -274,8 +402,14 @@ def do_multi_inference(
 
     response = stub.MultiInference(request, 5.0)
 
-    results = get_multi_inference_results(response)
+    results = parse_multi_inference_results(response)
     return results
+
+### ### ### ###
+
+
+
+# GetModelMetadata #
 
 def get_get_model_metadata_request(
         model_spec      ,
@@ -285,13 +419,7 @@ def get_get_model_metadata_request(
     request = get_model_metadata_pb2.GetModelMetadataRequest()
 
     # ModelSpec
-    request.model_spec.name = model_spec['name']
-    if 'version' in model_spec:
-        request.model_spec.version.value = model_spec['version']
-    if 'version_label' in model_spec:
-        request.model_spec.version_label = model_spec['version_label']
-    if 'signature_name' in model_spec:
-        request.model_spec.signature_name = model_spec['signature_name']
+    set_model_spec(request.model_spec, model_spec)
 
     # MetadataFields
     for field in metadata_field:
@@ -299,90 +427,33 @@ def get_get_model_metadata_request(
 
     return request
 
-def get_tensor_info_result(
-        tensor_info):
-
-    result = {}
-
-    # Encoding
-    if tensor_info.HasField('name'):
-        result['name'] = tensor_info.name
-    if tensor_info.HasField('coo_sparse'):
-        result['values_tensor_name']      = tensor_info.coo_sparse.values_tensor_name
-        result['indices_tensor_name']     = tensor_info.coo_sparse.indices_tensor_name
-        result['dense_shape_tensor_name'] = tensor_info.coo_sparse.dense_shape_tensor_name
-    if tensor_info.HasField('composite_tensor'):
-        result['composite_tensor'] = []
-        ## do not parse 'type_spec'
-        for tensor_comp in tensor_info.composite_tensor.components:
-            result['composite_tensor'].append (get_tensor_info_result(tensor_comp) )
-
-    # DataType (enum)
-    result['dtype'] = tensor_info.dtype
-
-    # TensorShape
-    result['tensor_shape'] = {}
-    result['tensor_shape']['dim'] = []
-    for dim in tensor_info.tensor_shape.dim:
-        dim_dict = {
-            'size': dim.size ,
-            'name': dim.name }
-        result['tensor_shape']['dim'].append(dim_dict)
-
-    result['tensor_shape']['unknown_rank'] = tensor_info.tensor_shape.unknown_rank
-
-    return result
-
-def get_get_model_metadata_result(
+def parse_get_model_metadata_result(
         response ):
 
-    result = {}
+    parsed = {}
 
-    # ModelSpec
-    result['model_spec'] = {}
-    model_spec = response.model_spec
-    result['model_spec']['name']           = model_spec.name
-    result['model_spec']['version']        = model_spec.version.value
-    result['model_spec']['version_label']  = model_spec.version_label
-    result['model_spec']['signature_name'] = model_spec.signature_name
+   # ModelSpec
+    parsed['model_spec'] = parse_model_spec(response.model_spec)
 
     # Metadata
-    result['metadata'] = {}
+    parsed['metadata'] = {}
     metadata = response.metadata
     for field in metadata:
         if field != 'signature_def':
             print('unknown metadata field:', field)
             continue
 
-        ## TODO getter method for SignatureDefMap
         from tensorflow_serving.apis import get_model_metadata_pb2
         signature_map = get_model_metadata_pb2.SignatureDefMap()
         if metadata[field].Is(signature_map.DESCRIPTOR):
             metadata[field].Unpack(signature_map)
 
-        result['metadata'][field] = {}
+        parsed['metadata'][field] = {}
 
-        for signature_key in signature_map.signature_def:
-            result['metadata'][field][signature_key] = {}
-            signature = result['metadata'][field][signature_key]
-            response_signature = signature_map.signature_def[signature_key]
+        for signature in signature_map.signature_def:
+            parsed['metadata'][field][signature] = parse_signature_def(signature_map.signature_def[signature])
 
-            # Inputs
-            signature['inputs'] = {}
-            for alias in response_signature.inputs:
-                tensor_info = response_signature.inputs[alias]
-                signature['inputs'][alias] = get_tensor_info_result(tensor_info)
-
-            # Outputs
-            signature['outputs'] = {}
-            for alias in response_signature.outputs:
-                tensor_info = response_signature.outputs[alias]
-                signature['outputs'][alias] = get_tensor_info_result(tensor_info)
-
-            # MethodName
-            signature['method_name'] = response_signature.method_name
-
-    return result
+    return parsed
 
 def do_get_model_metadata(
         stub            ,
@@ -393,11 +464,17 @@ def do_get_model_metadata(
 
     response = stub.GetModelMetadata(request, 5.0)
 
-    result = get_get_model_metadata_result(response)
+    result = parse_get_model_metadata_result(response)
     return result
 
+### ### ### ###
 
-############################
+### ### ### ### ### ### ### ###
+### ### ### ### ### ### ### ###
+### ### ### ### ### ### ### ###
+
+
+
 
 def get_parser():
     desc = "A script that runs a gRPC query to a TensorFlow serving."

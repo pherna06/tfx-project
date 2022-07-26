@@ -1,0 +1,62 @@
+[
+    {
+        "model_spec": {
+            "name": "half_plus_two",
+            "version": 123,
+            "version_label": "",
+            "signature_name": "classify_x_to_y"
+        },
+        "classifications": [
+            {
+                "label": "",
+                "score": 2.5
+            },
+            {
+                "label": "",
+                "score": 3.0
+            },
+            {
+                "label": "",
+                "score": 3.5
+            },
+            {
+                "label": "",
+                "score": 4.0
+            },
+            {
+                "label": "",
+                "score": 4.5
+            }
+        ]
+    },
+    {
+        "model_spec": {
+            "name": "half_plus_two",
+            "version": 123,
+            "version_label": "",
+            "signature_name": "regress_x_to_y"
+        },
+        "regressions": [
+            2.5,
+            3.0,
+            3.5,
+            4.0,
+            4.5
+        ]
+    },
+    {
+        "model_spec": {
+            "name": "half_plus_two",
+            "version": 123,
+            "version_label": "",
+            "signature_name": "regress_x_to_y2"
+        },
+        "regressions": [
+            3.5,
+            4.0,
+            4.5,
+            5.0,
+            5.5
+        ]
+    }
+]
