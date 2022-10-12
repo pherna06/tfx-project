@@ -1,0 +1,88 @@
+{
+  "tasks": [
+    {
+      "model_spec": {
+        "name": "half_plus_two",
+        "signature_name": "classify_x_to_y"
+      },
+      "method_name": "tensorflow/serving/classify"
+    },
+    {
+      "model_spec": {
+        "name": "half_plus_two",
+        "signature_name": "regress_x_to_y"
+      },
+      "method_name": "tensorflow/serving/regress"
+    },
+    {
+      "model_spec": {
+        "name": "half_plus_two",
+        "signature_name": "regress_x_to_y2"
+      },
+      "method_name": "tensorflow/serving/regress"
+    }
+  ],
+  "input": {
+    "kind": {
+      "example_list": {
+        "examples": [
+          {
+            "features": {
+              "feature": {
+                "x": {
+                  "kind": {
+                    "float_list": [1.0]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "features": {
+              "feature": {
+                "x": {
+                  "kind": {
+                    "float_list": [2.0]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "features": {
+              "feature": {
+                "x": {
+                  "kind": {
+                    "float_list": [3.0]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "features": {
+              "feature": {
+                "x": {
+                  "kind": {
+                    "float_list": [5.0]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "features": {
+              "feature": {
+                "x": {
+                  "kind": {
+                    "float_list": [7.0]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

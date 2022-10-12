@@ -1,0 +1,14 @@
+{
+  "docker_image": "tensorflow/serving",
+  "docker": [
+    "--name grpc_model_api",
+    "-p 8500:8500",
+    "-v $PWD/../models:/models",
+    "-v $PWD/model_server_config.txt:/models/model_server_config.txt",
+    "-td"
+  ],
+  "tensorflow_model_server": [
+    "--model_config_file=/models/model_server_config.txt",
+    "--allow_version_labels_for_unavailable_models=true"
+  ]
+}

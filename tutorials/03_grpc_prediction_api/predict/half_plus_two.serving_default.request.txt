@@ -1,0 +1,17 @@
+model_spec {
+  name: "half_plus_two"
+  signature_name: "serving_default"
+}
+inputs {
+  key: "x"
+  value {
+    dtype: DT_FLOAT
+    tensor_shape {
+      dim {
+        size: 5
+      }
+    }
+    tensor_content: "\000\000\200?\000\000\000@\000\000@@\000\000\240@\000\000\340@"
+  }
+}
+output_filter: "y"

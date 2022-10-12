@@ -1,0 +1,14 @@
+{
+  "docker_image": "tensorflow/serving",
+  "docker": [
+    "--name half_plus_two",
+    "-p 8500:8500",
+    "-p 8501:8501",
+    "-v $PWD/../models/half_plus_two:/models/half_plus_two",
+    "-td"
+  ],
+  "tensorflow_model_server": [
+    "--model_name=half_plus_two",
+    "--model_base_path=/models/half_plus_two"
+  ]
+}

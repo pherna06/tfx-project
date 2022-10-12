@@ -1,0 +1,41 @@
+config {
+  model_config_list {
+    config {
+      name: "half_plus_two"
+      base_path: "/models/half_plus_two"
+      model_platform: "tensorflow"
+      model_version_policy {
+        all {
+        }
+      }
+      version_labels {
+        key: "stable"
+        value: 1
+      }
+    }
+    config {
+      name: "mnist"
+      base_path: "/models/mnist"
+      model_platform: "tensorflow"
+      model_version_policy {
+        specific {
+          versions: 2
+          versions: 3
+          versions: 4
+        }
+      }
+      version_labels {
+        key: "canary"
+        value: 4
+      }
+      version_labels {
+        key: "early"
+        value: 2
+      }
+      version_labels {
+        key: "stable"
+        value: 3
+      }
+    }
+  }
+}

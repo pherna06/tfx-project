@@ -1,0 +1,38 @@
+{
+  "config": {
+    "model_config_list": {
+      "config": [
+        {
+          "name": "half_plus_two",
+          "base_path": "/models/half_plus_two",
+          "model_platform": "tensorflow",
+          "model_version_policy": {
+            "policy_choice": {
+              "all": {}
+            }
+          },
+          "version_labels": {
+            "stable": 1
+          }
+        },
+        {
+          "name": "mnist",
+          "base_path": "/models/mnist",
+          "model_platform": "tensorflow",
+          "model_version_policy": {
+            "policy_choice": {
+              "specific": {
+                "versions": [1, 2, 3]
+              }
+            }
+          },
+          "version_labels": {
+            "canary": 3,
+            "stable": 2,
+            "early": 1
+          }
+        }
+      ]
+    }
+  }
+}

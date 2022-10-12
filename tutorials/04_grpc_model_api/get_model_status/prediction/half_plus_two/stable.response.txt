@@ -1,0 +1,23 @@
+outputs {
+  key: "y"
+  value {
+    dtype: DT_FLOAT
+    tensor_shape {
+      dim {
+        size: 5
+      }
+    }
+    float_val: 2.5
+    float_val: 3.0
+    float_val: 3.5
+    float_val: 4.5
+    float_val: 5.5
+  }
+}
+model_spec {
+  name: "half_plus_two"
+  version {
+    value: 1
+  }
+  signature_name: "serving_default"
+}

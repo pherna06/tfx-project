@@ -1,0 +1,18 @@
+{
+  "model_server_config": {
+    "modelConfigList": {
+      "config": [
+        {
+          "name": "half_plus_two",
+          "basePath": "/models/half_plus_two",
+          "modelPlatform": "tensorflow"
+        },
+        {
+          "name": "mnist",
+          "basePath": "/models/mnist",
+          "modelPlatform": "tensorflow"
+        }
+      ]
+    }
+  }
+}

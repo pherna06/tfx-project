@@ -1,0 +1,26 @@
+{
+  "result": {
+    "regressions": [
+      {
+        "value": 2.5
+      },
+      {
+        "value": 3.0
+      },
+      {
+        "value": 3.5
+      },
+      {
+        "value": 4.5
+      },
+      {
+        "value": 5.5
+      }
+    ]
+  },
+  "modelSpec": {
+    "name": "half_plus_two",
+    "version": "1",
+    "signatureName": "regress_x_to_y"
+  }
+}

@@ -1,0 +1,71 @@
+outputs {
+  key: "scores"
+  value {
+    dtype: DT_FLOAT
+    tensor_shape {
+      dim {
+        size: 5
+      }
+      dim {
+        size: 10
+      }
+    }
+    float_val: 1.567953e-05
+    float_val: 9.1932806e-10
+    float_val: 0.7897209
+    float_val: 0.16652188
+    float_val: 1.239564e-09
+    float_val: 0.04186146
+    float_val: 0.00013960188
+    float_val: 6.0134903e-07
+    float_val: 0.0017392252
+    float_val: 5.740368e-07
+    float_val: 1.3304734e-05
+    float_val: 6.675165e-10
+    float_val: 0.36804178
+    float_val: 0.38247705
+    float_val: 4.7371063e-09
+    float_val: 0.2483536
+    float_val: 7.508982e-05
+    float_val: 1.7476206e-05
+    float_val: 0.0010205453
+    float_val: 1.1908494e-06
+    float_val: 1.8304925e-05
+    float_val: 3.8072281e-10
+    float_val: 0.77574974
+    float_val: 0.03161493
+    float_val: 2.4795013e-09
+    float_val: 0.1849553
+    float_val: 9.119024e-05
+    float_val: 5.108362e-07
+    float_val: 0.0075698528
+    float_val: 1.703943e-07
+    float_val: 1.3276116e-05
+    float_val: 2.5848546e-10
+    float_val: 0.5340508
+    float_val: 0.16490392
+    float_val: 1.2270392e-09
+    float_val: 0.29694372
+    float_val: 3.7051646e-05
+    float_val: 3.2378534e-07
+    float_val: 0.004050692
+    float_val: 1.9271351e-07
+    float_val: 6.9942694e-06
+    float_val: 7.606876e-10
+    float_val: 0.802361
+    float_val: 0.09177497
+    float_val: 5.564558e-09
+    float_val: 0.10476748
+    float_val: 4.9472583e-05
+    float_val: 6.729207e-07
+    float_val: 0.0010392808
+    float_val: 1.1950085e-07
+  }
+}
+model_spec {
+  name: "mnist"
+  version {
+    value: 4
+  }
+  signature_name: "predict_images"
+}

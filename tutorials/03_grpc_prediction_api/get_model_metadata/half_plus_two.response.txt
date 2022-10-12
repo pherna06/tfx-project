@@ -1,0 +1,178 @@
+model_spec {
+  name: "half_plus_two"
+  version {
+    value: 1
+  }
+}
+metadata {
+  key: "signature_def"
+  value {
+    [type.googleapis.com/tensorflow.serving.SignatureDefMap] {
+      signature_def {
+        key: "classify_x_to_y"
+        value {
+          inputs {
+            key: "inputs"
+            value {
+              name: "tf_example:0"
+              dtype: DT_STRING
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          outputs {
+            key: "scores"
+            value {
+              name: "y:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                dim {
+                  size: -1
+                }
+                dim {
+                  size: 1
+                }
+              }
+            }
+          }
+          method_name: "tensorflow/serving/classify"
+        }
+      }
+      signature_def {
+        key: "regress_x2_to_y3"
+        value {
+          inputs {
+            key: "inputs"
+            value {
+              name: "x2:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                dim {
+                  size: -1
+                }
+                dim {
+                  size: 1
+                }
+              }
+            }
+          }
+          outputs {
+            key: "outputs"
+            value {
+              name: "y3:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                dim {
+                  size: -1
+                }
+                dim {
+                  size: 1
+                }
+              }
+            }
+          }
+          method_name: "tensorflow/serving/regress"
+        }
+      }
+      signature_def {
+        key: "regress_x_to_y"
+        value {
+          inputs {
+            key: "inputs"
+            value {
+              name: "tf_example:0"
+              dtype: DT_STRING
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          outputs {
+            key: "outputs"
+            value {
+              name: "y:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                dim {
+                  size: -1
+                }
+                dim {
+                  size: 1
+                }
+              }
+            }
+          }
+          method_name: "tensorflow/serving/regress"
+        }
+      }
+      signature_def {
+        key: "regress_x_to_y2"
+        value {
+          inputs {
+            key: "inputs"
+            value {
+              name: "tf_example:0"
+              dtype: DT_STRING
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          outputs {
+            key: "outputs"
+            value {
+              name: "y2:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                dim {
+                  size: -1
+                }
+                dim {
+                  size: 1
+                }
+              }
+            }
+          }
+          method_name: "tensorflow/serving/regress"
+        }
+      }
+      signature_def {
+        key: "serving_default"
+        value {
+          inputs {
+            key: "x"
+            value {
+              name: "x:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                dim {
+                  size: -1
+                }
+                dim {
+                  size: 1
+                }
+              }
+            }
+          }
+          outputs {
+            key: "y"
+            value {
+              name: "y:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                dim {
+                  size: -1
+                }
+                dim {
+                  size: 1
+                }
+              }
+            }
+          }
+          method_name: "tensorflow/serving/predict"
+        }
+      }
+    }
+  }
+}

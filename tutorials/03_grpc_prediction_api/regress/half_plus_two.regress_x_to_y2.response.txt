@@ -1,0 +1,24 @@
+result {
+  regressions {
+    value: 3.5
+  }
+  regressions {
+    value: 4.0
+  }
+  regressions {
+    value: 4.5
+  }
+  regressions {
+    value: 5.5
+  }
+  regressions {
+    value: 6.5
+  }
+}
+model_spec {
+  name: "half_plus_two"
+  version {
+    value: 1
+  }
+  signature_name: "regress_x_to_y2"
+}

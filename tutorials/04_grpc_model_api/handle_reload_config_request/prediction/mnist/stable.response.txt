@@ -1,0 +1,219 @@
+result {
+  classifications {
+    classes {
+      label: "3"
+      score: 0.5291161
+    }
+    classes {
+      label: "5"
+      score: 0.2418622
+    }
+    classes {
+      label: "2"
+      score: 0.21845709
+    }
+    classes {
+      label: "8"
+      score: 0.010237825
+    }
+    classes {
+      label: "0"
+      score: 0.00023521416
+    }
+    classes {
+      label: "6"
+      score: 4.6246103e-05
+    }
+    classes {
+      label: "7"
+      score: 4.1725998e-05
+    }
+    classes {
+      label: "9"
+      score: 3.481163e-06
+    }
+    classes {
+      label: "4"
+      score: 4.7193428e-08
+    }
+    classes {
+      label: "1"
+      score: 4.213889e-09
+    }
+  }
+  classifications {
+    classes {
+      label: "3"
+      score: 0.6168523
+    }
+    classes {
+      label: "5"
+      score: 0.24912119
+    }
+    classes {
+      label: "2"
+      score: 0.07344759
+    }
+    classes {
+      label: "8"
+      score: 0.060036372
+    }
+    classes {
+      label: "6"
+      score: 0.0002979849
+    }
+    classes {
+      label: "0"
+      score: 0.00014639492
+    }
+    classes {
+      label: "7"
+      score: 7.116873e-05
+    }
+    classes {
+      label: "9"
+      score: 2.6331378e-05
+    }
+    classes {
+      label: "4"
+      score: 6.445773e-07
+    }
+    classes {
+      label: "1"
+      score: 1.5085195e-08
+    }
+  }
+  classifications {
+    classes {
+      label: "5"
+      score: 0.75622433
+    }
+    classes {
+      label: "3"
+      score: 0.20678224
+    }
+    classes {
+      label: "2"
+      score: 0.030277211
+    }
+    classes {
+      label: "8"
+      score: 0.006150922
+    }
+    classes {
+      label: "7"
+      score: 0.0002766288
+    }
+    classes {
+      label: "0"
+      score: 0.00018241846
+    }
+    classes {
+      label: "6"
+      score: 9.2965915e-05
+    }
+    classes {
+      label: "9"
+      score: 1.33189305e-05
+    }
+    classes {
+      label: "4"
+      score: 8.0554976e-08
+    }
+    classes {
+      label: "1"
+      score: 5.6371077e-09
+    }
+  }
+  classifications {
+    classes {
+      label: "3"
+      score: 0.5420252
+    }
+    classes {
+      label: "2"
+      score: 0.23036148
+    }
+    classes {
+      label: "5"
+      score: 0.21206304
+    }
+    classes {
+      label: "8"
+      score: 0.014706155
+    }
+    classes {
+      label: "0"
+      score: 0.00071478373
+    }
+    classes {
+      label: "7"
+      score: 9.041281e-05
+    }
+    classes {
+      label: "6"
+      score: 3.0053265e-05
+    }
+    classes {
+      label: "9"
+      score: 8.6490845e-06
+    }
+    classes {
+      label: "4"
+      score: 2.4741234e-07
+    }
+    classes {
+      label: "1"
+      score: 4.929042e-09
+    }
+  }
+  classifications {
+    classes {
+      label: "5"
+      score: 0.50872487
+    }
+    classes {
+      label: "3"
+      score: 0.47050393
+    }
+    classes {
+      label: "2"
+      score: 0.011000781
+    }
+    classes {
+      label: "8"
+      score: 0.0091717215
+    }
+    classes {
+      label: "0"
+      score: 0.0005031856
+    }
+    classes {
+      label: "7"
+      score: 6.687138e-05
+    }
+    classes {
+      label: "6"
+      score: 2.681694e-05
+    }
+    classes {
+      label: "9"
+      score: 1.7542361e-06
+    }
+    classes {
+      label: "4"
+      score: 1.739627e-08
+    }
+    classes {
+      label: "1"
+      score: 4.156718e-09
+    }
+  }
+}
+model_spec {
+  name: "mnist"
+  version {
+    value: 3
+  }
+  signature_name: "serving_default"
+}

@@ -1,0 +1,11 @@
+{
+  "model_spec": {
+    "name": "half_plus_two",
+    "version_choice": {
+      "version": 1
+    }
+  },
+  "metadata_field": [
+    "signature_def"
+  ]
+}

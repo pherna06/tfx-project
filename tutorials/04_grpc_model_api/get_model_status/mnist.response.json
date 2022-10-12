@@ -1,0 +1,19 @@
+{
+  "model_version_status": [
+    {
+      "version": "3",
+      "state": "AVAILABLE",
+      "status": {}
+    },
+    {
+      "version": "2",
+      "state": "AVAILABLE",
+      "status": {}
+    },
+    {
+      "version": "1",
+      "state": "AVAILABLE",
+      "status": {}
+    }
+  ]
+}

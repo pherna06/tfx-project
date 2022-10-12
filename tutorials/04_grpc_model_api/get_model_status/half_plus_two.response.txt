@@ -1,0 +1,6 @@
+model_version_status {
+  version: 1
+  state: AVAILABLE
+  status {
+  }
+}

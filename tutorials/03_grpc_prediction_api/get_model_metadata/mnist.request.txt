@@ -1,0 +1,4 @@
+model_spec {
+  name: "mnist"
+}
+metadata_field: "signature_def"

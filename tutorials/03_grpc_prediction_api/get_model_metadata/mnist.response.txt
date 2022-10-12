@@ -1,0 +1,75 @@
+model_spec {
+  name: "mnist"
+  version {
+    value: 4
+  }
+}
+metadata {
+  key: "signature_def"
+  value {
+    [type.googleapis.com/tensorflow.serving.SignatureDefMap] {
+      signature_def {
+        key: "predict_images"
+        value {
+          inputs {
+            key: "images"
+            value {
+              name: "x:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          outputs {
+            key: "scores"
+            value {
+              name: "y:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          method_name: "tensorflow/serving/predict"
+        }
+      }
+      signature_def {
+        key: "serving_default"
+        value {
+          inputs {
+            key: "inputs"
+            value {
+              name: "tf_example:0"
+              dtype: DT_STRING
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          outputs {
+            key: "classes"
+            value {
+              name: "hash_table_Lookup/LookupTableFindV2:0"
+              dtype: DT_STRING
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          outputs {
+            key: "scores"
+            value {
+              name: "TopKV2:0"
+              dtype: DT_FLOAT
+              tensor_shape {
+                unknown_rank: true
+              }
+            }
+          }
+          method_name: "tensorflow/serving/classify"
+        }
+      }
+    }
+  }
+}

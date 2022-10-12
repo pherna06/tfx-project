@@ -152,16 +152,16 @@ which is a list of `ModelConfig` protobufs. Here is a basic example:
 
 ```
 model_config_list {
-    config {
-        name: 'my_first_model'
-        base_path: '/tmp/my_first_model/'
-        model_platform: 'tensorflow'
-    }
-    config {
-        name: 'my_second_model'
-        base_path: '/tmp/my_second_model/'
-        model_platform: 'tensorflow'
-    }
+  config {
+    name: 'my_first_model'
+    base_path: '/tmp/my_first_model/'
+    model_platform: 'tensorflow'
+  }
+  config {
+    name: 'my_second_model'
+    base_path: '/tmp/my_second_model/'
+    model_platform: 'tensorflow'
+  }
 }
 ```
 
@@ -176,15 +176,17 @@ For example, to pin version 42 as the one to server:
 
 ```
 model_config_list {
+  ...
+  config {
     ...
-    config {
-        ...
-        model_version_policy {
-            specific {
-                versions: 42
-            }
-        }
+    model_version_policy {
+      specific {
+        versions: 42
+      }
     }
+    ...
+  }
+  ...
 }
 ```
 
@@ -193,16 +195,18 @@ versions 42 and 43:
 
 ```
 model_config_list {
+  ...
+  config {
     ...
-    config {
-        ...
-        model_version_policy {
-            specific {
-                versions: 42
-                versions: 43
-            }
-        }
+    model_version_policy {
+      specific {
+        versions: 42
+        versions: 43
+      }
     }
+    ...
+  }
+  ...
 }
 ```
 
@@ -216,24 +220,26 @@ You can configure these model versions aliases, or labels, like so:
 
 ```
 model_config_list {
+  ...
+  config {
     ...
-    config {
-        ...
-        model_version_policy {
-            specific {
-                versions: 42
-                versions: 43
-            }
-        }
-        version_labels {
-            key: 'stable'
-            value: 42
-        }
-        version_labels {
-            key: 'canary'
-            value: 43
-        }
+    model_version_policy {
+      specific {
+        versions: 42
+        versions: 43
+      }
     }
+    version_labels {
+      key: 'stable'
+      value: 42
+    }
+    version_labels {
+      key: 'canary'
+      value: 43
+    }
+    ...
+  }
+  ...
 }
 ```
 
@@ -363,13 +369,13 @@ Example `PlatformConfigMap` file:
 
 ```
 platform_configs {
-    key: 'tensorflow'
-    value {
-        source_adapter_config {
-            type_url: 'type.googleapis.com/tensorflow.serving.SavedModelBundleSourceAdapterConfig',
-            value: '\xc2>\x04\x12\x028\x01'
-        }
+  key: 'tensorflow'
+  value {
+    source_adapter_config {
+      type_url: 'type.googleapis.com/tensorflow.serving.SavedModelBundleSourceAdapterConfig',
+      value: '\xc2>\x04\x12\x028\x01'
     }
+  }
 }
 ```
 
@@ -388,8 +394,8 @@ Example `MonitoringConfig` file:
 
 ```
 prometheus_config {
-    enable: true
-    path: '/monitoring/prometheus/metrics'
+  enable: true
+  path: '/monitoring/prometheus/metrics'
 }
 ```
 

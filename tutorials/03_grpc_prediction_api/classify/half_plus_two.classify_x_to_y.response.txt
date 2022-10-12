@@ -1,0 +1,34 @@
+result {
+  classifications {
+    classes {
+      score: 2.5
+    }
+  }
+  classifications {
+    classes {
+      score: 3.0
+    }
+  }
+  classifications {
+    classes {
+      score: 3.5
+    }
+  }
+  classifications {
+    classes {
+      score: 4.5
+    }
+  }
+  classifications {
+    classes {
+      score: 5.5
+    }
+  }
+}
+model_spec {
+  name: "half_plus_two"
+  version {
+    value: 1
+  }
+  signature_name: "classify_x_to_y"
+}
